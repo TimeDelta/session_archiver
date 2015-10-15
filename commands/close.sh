@@ -4,6 +4,8 @@ source ./util/global.sh
 debug "in `basename "$0"`:"
 debug "$@"
 
+COMMAND_NAME="`basename "${0%.*}"`"
+
 modifiers=""
 while [[ $1 == "-m" ]]; do
 	if [[ -n $modifiers ]]; then
@@ -51,6 +53,7 @@ EOT
 IFS=$'\n'
 
 # close the apps associated with the specified session
+# @NOTE apps still get closed even if they're part of another active session
 for app in $apps_to_close; do
 	osascript -e "tell application \"$app\" to quit"
 	echo "$app" >> "$SESSION_FILE"

@@ -4,6 +4,8 @@ source ./util/global.sh
 debug "in `basename "$0"`:"
 debug "$@"
 
+COMMAND_NAME="`basename "${0%.*}"`"
+
 modifiers=""
 while [[ $1 == "-m" ]]; do
 	if [[ -n $modifiers ]]; then

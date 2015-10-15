@@ -4,6 +4,8 @@ source ./util/global.sh
 debug "in `basename "$0"`:"
 debug "$@"
 
+COMMAND_NAME="`basename "${0%.*}"`"
+
 modifiers=""
 while [[ $1 == "-m" ]]; do
 	if [[ -n $modifiers ]]; then
@@ -71,12 +73,12 @@ EOT
 )"
 debug "$chosen_apps"
 
-debug "Running application action 'create' for chosen apps"
+debug "Running application action '$COMMAND_NAME' for chosen apps"
 IFS=$'\n'
 for app in $chosen_apps; do
 	debug "	$app"
 	mkdir -p "$SESSIONS_DIR/$name/$app"
-	run_app_action_for_session "$app" create "$name"
+	run_app_action_for_session "$app" "$COMMAND_NAME" "$name"
 done
 
 echo "$chosen_apps" | set_session_apps "$name"
