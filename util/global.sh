@@ -1,5 +1,18 @@
 #!/bin/bash
-eval "`cat "$UTIL/global_public.sh"`"
+debug() {
+	echo "$@" >&2
+}
+
+quote_args() {
+	local args=""
+	for arg in "$@"; do
+		if [[ -n $args ]]; then
+			args="$args "
+		fi
+		args="$args'$arg'"
+	done
+	echo "$args"
+}
 
 print_extra_item() {
 	# after options:
@@ -31,6 +44,19 @@ print_extra_item() {
 EOB
 }
 
+get_active_sessions() {
+	cat "$CURRENT_SESSIONS_FILE"
+}
+
+get_all_sessions() {
+	ls -1 "$SESSIONS_DIR"
+}
+
+get_session_apps() {
+	local session="$1"
+	cat "$SESSIONS_DIR/$session/apps"
+}
+
 # read apps from stdin (one per line)
 # $1 = session name
 set_session_apps() {
@@ -49,10 +75,20 @@ set_session_apps() {
 	done
 }
 
+get_session_uuid() {
+	local session="$1"
+	cat "$SESSIONS_DIR/$session/uuid"
+}
+
 set_session_uuid() {
 	local session="$1"
 	local uuid="$2"
 	echo "$uuid" > "$SESSIONS_DIR/$session/uuid"
+}
+
+get_session_description() {
+	local session="$1"
+	cat "$SESSIONS_DIR/$session/description"
 }
 
 set_session_description() {
@@ -65,5 +101,5 @@ run_app_action_for_session() {
 	local app="$1"
 	local action="$2"
 	local session="$3"
-	bash -c "cd '$SESSIONS_DIR/$session' && '$UTIL/source_and_run.sh' '$UTIL/global_public.sh' '$APPLICATION_ACTIONS_DIR/$app/$action.sh'"
+	bash -c "cd '$SESSIONS_DIR/$session' && '$UTIL/source_and_run.sh' '$UTIL/global.sh' '$APPLICATION_ACTIONS_DIR/$app/$action.sh'"
 }
