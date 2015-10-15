@@ -50,6 +50,14 @@ get_active_sessions() {
 	cat "$CURRENT_SESSIONS_FILE"
 }
 
+is_session_active() {
+	if [[ -n `get_active_sessions | grep -fx "$session"` ]] then
+		echo 1
+	else
+		echo 0
+	fi
+}
+
 get_all_sessions() {
 	ls -1 "$SESSIONS_DIR"
 }
