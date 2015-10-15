@@ -38,6 +38,8 @@ esac
 session="$1"
 shift
 
+# @TODO close all active sessions if $session is not supplied
+
 apps_to_close="$(osascript <<EOT
 	tell application "System Events"
 		set openApps to (name of every process whose name is in {`get_session_apps "$session" | tr '\n' ',' | sed 's/,$//'`})
