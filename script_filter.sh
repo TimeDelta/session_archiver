@@ -26,7 +26,7 @@ echo "<?xml version=\"1.0\"?>"
 echo "<items>"
 
 IFS=$'\n'
-# TODO make the create command invalid if the current name argument is the same as an existing session
+# @TODO make the create command invalid if the current name argument is the same as an existing session
 for item in `find $COMMANDS_DIR -iname "$command*.alfred_item"`; do
 	max_args=$(`echo "$item" | sed 's/alfred_item$/sh/'` --max-args)
 	if [[ $# -le $(($max_args + 1)) || $max_args -eq -1 ]]; then
