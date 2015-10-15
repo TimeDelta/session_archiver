@@ -24,7 +24,7 @@ case $session in
 		echo 1
 		exit 0 ;;
 	--extra-alfred-items)
-		active="`active_sessions`"
+		active="`get_active_sessions`"
 		print_extra_item --valid NO "Active Sessions" "${active:-There are currently no active sessions.}"
 		exit 0 ;;
 	--session-alt-subtitle)
