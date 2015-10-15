@@ -1,3 +1,3 @@
 #!/bin/bash
 source "$1"
-eval "$2"
+eval "${@:2}"
