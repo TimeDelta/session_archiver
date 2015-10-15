@@ -55,6 +55,7 @@ IFS=$'\n'
 # close the apps associated with the specified session
 # @NOTE apps still get closed even if they're part of another active session
 for app in $apps_to_close; do
+	run_app_action_for_session "$app" "$COMMAND_NAME" "$session"
 	osascript -e "tell application \"$app\" to quit"
 	echo "$app" >> "$SESSION_FILE"
 done

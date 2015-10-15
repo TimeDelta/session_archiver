@@ -40,6 +40,7 @@ shift
 
 for app in `get_session_apps "$session"`; do
 	osascript -e "tell application \"$app\" to launch"
+	run_app_action_for_session "$app" "$COMMAND_NAME" "$session"
 done
 
 echo "$session" > "$CURRENT_SESSIONS_FILE"
