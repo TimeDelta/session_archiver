@@ -38,6 +38,7 @@ shift
 description="$@"
 debug "description: $description"
 
+debug "getting installed apps"
 installed_apps="`\
 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -dump \
 	| grep --only-matching "/.*\.app" \
@@ -56,8 +57,8 @@ installed_apps="`\
 	| tr '\n' ',' \
 	| sed 's/,$//'`"
 debug "$installed_apps"
-debug "getting chosen apps"
 
+debug "getting chosen apps"
 chosen_apps="$(osascript <<EOT
 	choose from list {$installed_apps} with prompt "Which applications would you like to include in this session?" with multiple selections allowed
 	set chosenApps to result
@@ -69,11 +70,13 @@ chosen_apps="$(osascript <<EOT
 EOT
 )"
 debug "$chosen_apps"
-debug "storing chosen apps"
 
+debug "Running application action 'create' for chosen apps"
 IFS=$'\n'
 for app in $chosen_apps; do
-
+	debug "	$app"
+	mkdir -p "$SESSIONS_DIR/$name/$app"
+	run_app_action_for_session "$app" create "$name"
 done
 
 echo "$chosen_apps" | set_session_apps "$name"

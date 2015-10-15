@@ -1,5 +1,4 @@
 #!/bin/bash
-export GLOBAL_VARS=set
 export WORKFLOW_ID="com.bryanherman.sessionarchiver"
 export ROOT_DIR="`pwd`"
 export COMMANDS_DIR="$ROOT_DIR/commands"

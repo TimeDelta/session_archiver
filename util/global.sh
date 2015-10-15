@@ -1,4 +1,6 @@
 #!/bin/bash
+source ./global_vars.sh
+
 debug() {
 	echo "$@" >&2
 }
@@ -101,5 +103,9 @@ run_app_action_for_session() {
 	local app="$1"
 	local action="$2"
 	local session="$3"
-	bash -c "cd '$SESSIONS_DIR/$session' && '$UTIL/source_and_run.sh' '$UTIL/global.sh' '$APPLICATION_ACTIONS_DIR/$app/$action.sh'"
+	if [[ -e "$APPLICATION_ACTIONS_DIR/$app/$action.sh" ]]; then
+		bash -c "'$UTIL/source_and_run.sh' \
+			'$UTIL/global.sh' \
+			'cd \"$SESSIONS_DIR/$session/$app\" && \"$APPLICATION_ACTIONS_DIR/$app/$action.sh\"'"
+	fi
 }
