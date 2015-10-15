@@ -39,7 +39,7 @@ session="$1"
 shift
 
 IFS=$'\n'
-for current in `active_sessions`; do
+for current in `get_active_sessions`; do
 	"$COMMANDS_DIR"/close.sh "$current"
 done
 
