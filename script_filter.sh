@@ -45,12 +45,14 @@ for item in `find $COMMANDS_DIR -iname "$command*.sh"`; do
 done
 
 if [[ -e "$COMMANDS_DIR/$command.sh" ]]; then
-	"$COMMANDS_DIR/$command.sh" --extra-alfred-items
+        "$COMMANDS_DIR/$command.sh" --extra-alfred-items "$@"
 	if [[ `"$COMMANDS_DIR/$command.sh" --should-list-sessions` -eq 1 ]]; then
 		query="$@"
 		debug_item query "$query"
 		for session in `get_all_sessions | egrep "$query.*"`; do
-			echo "<item uid=\"`get_session_uuid "$session"`\" arg=\"$command $session $@\" valid=\"YES\" autocomplete=\"$session\">"
+                        echo "<item uid=\"`get_session_uuid "$session"`\""\
+                                "arg=\"$command $session `echo "$@" | sed "s/^$session//"`\""\
+                                "valid=\"YES\" autocomplete=\"$session\">"
 			echo "	<title>$session</title>"
 			echo "	<subtitle>`get_session_description "$session"`</subtitle>"
 			for mod in fn ctrl cmd alt shift; do
