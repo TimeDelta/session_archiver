@@ -15,15 +15,27 @@ while [[ $1 == "-m" ]]; do
 	shift 2
 done
 
-case $1 in
-	--max-args)
-		echo 1
+session="$1"
+shift
+
+case $session in
+	--max-args) echo 1; exit 0 ;;
+	--title) echo "Close"; exit 0 ;;
+	--description)
+		session="$1"
+		if [[ -z $session ]]; then
+			active="`get_active_sessions | tr '\n' ',' | sed 's/,/, /'`"
+			echo "Close all active sessions (${active:-No active sessions})."
+		else
+			echo "Close the specified active session."
+		fi
 		exit 0 ;;
-	--should-list-sessions)
-		echo 1
-		exit 0 ;;
-	--extra-alfred-items)
-		exit 0 ;;
+	--usage) echo "$COMMAND_NAME {session name}"; exit 0 ;;
+	--valid) echo "YES"; exit 0 ;;
+	--complete) echo "$COMMAND_NAME"; exit 0 ;;
+	--arg) echo "$COMMAND_NAME <args>"; exit 0 ;;
+	--should-list-sessions) echo 1; exit 0 ;;
+	--extra-alfred-items) exit 0 ;;
 	--session-alt-subtitle)
 		case $modifiers in
 			fn) echo ;;
@@ -34,9 +46,6 @@ case $1 in
 		esac
 		exit 0 ;;
 esac
-
-session="$1"
-shift
 
 # @TODO close all active sessions if $session is not supplied
 

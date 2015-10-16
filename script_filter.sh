@@ -27,12 +27,20 @@ echo "<items>"
 
 IFS=$'\n'
 # @TODO make the create command invalid if the current name argument is the same as an existing session
-for item in `find $COMMANDS_DIR -iname "$command*.alfred_item"`; do
-	max_args=$(`echo "$item" | sed 's/alfred_item$/sh/'` --max-args)
+for item in `find $COMMANDS_DIR -iname "$command*.sh"`; do
+	max_args=$("$item" --max-args)
 	if [[ $# -le $(($max_args + 1)) || $max_args -eq -1 ]]; then
-		command_name="`basename "$item" | sed 's/.alfred_item$//'`"
-		debug_item "$command_name.sh --max-args" "$max_args"
-		cat "$item" | sed "s/alfred_command_name/$command_name/g" | sed -E "s/(arg=\"[^ ]*)\"/\1 $quoted_args\"/"
+		debug_item "`basename "$item"` --max-args" "$max_args"
+
+		arg="`"$item" --arg | sed "s/<args>/$quoted_args/"`"
+		valid="`"$item" --valid`"
+		complete="`"$item" --complete`"
+
+		echo "	<item uid=\"$WORKFLOW_ID.`basename "$item"`\" arg=\"$arg\" valid=\"$valid\" autocomplete=\"$complete\">"
+		echo "		<title>`"$item" --title`</title>"
+		echo "		<subtitle mod=\"$DESCRIPTION_MODIFIER\">`"$item" --description`</subtitle>"
+		echo "		<subtitle mod=\"$USAGE_MODIFIER\">`"$item" --usage`</subtitle>"
+		echo "	</item>"
 	fi
 done
 
@@ -42,7 +50,7 @@ if [[ -e "$COMMANDS_DIR/$command.sh" ]]; then
 		query="$@"
 		debug_item query "$query"
 		for session in `get_all_sessions | egrep "$query.*"`; do
-			echo "<item uid=\"`get_session_uuid "$session"`\" arg=\"$session\" valid=\"YES\" autocomplete=\"$session\">"
+			echo "<item uid=\"`get_session_uuid "$session"`\" arg=\"$command $session $@\" valid=\"YES\" autocomplete=\"$session\">"
 			echo "	<title>$session</title>"
 			echo "	<subtitle>`get_session_description "$session"`</subtitle>"
 			for mod in fn ctrl cmd alt shift; do

@@ -51,7 +51,7 @@ get_active_sessions() {
 }
 
 is_session_active() {
-	if [[ -n `get_active_sessions | grep -fx "$session"` ]]; then
+	if [[ -n `get_active_sessions | grep -fx "$session" 2> /dev/null` ]]; then
 		echo 1
 	else
 		echo 0

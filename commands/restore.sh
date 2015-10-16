@@ -16,14 +16,15 @@ while [[ $1 == "-m" ]]; do
 done
 
 case $1 in
-	--max-args)
-		echo \-1
-		exit 0 ;;
-	--should-list-sessions)
-		echo 1
-		exit 0 ;;
-	--extra-alfred-items)
-		exit 0 ;;
+	--max-args) echo \-1; exit 0 ;;
+	--title) echo "Restore"; exit 0 ;;
+	--description) echo "Restore the specified session."; exit 0 ;;
+	--usage) echo "$COMMAND_NAME [search query]"; exit 0 ;;
+	--valid) echo "YES"; exit 0 ;;
+	--complete) echo "$COMMAND_NAME"; exit 0 ;;
+	--arg) echo "$COMMAND_NAME <args>"; exit 0 ;;
+	--should-list-sessions) echo 1; exit 0 ;;
+	--extra-alfred-items) exit 0 ;;
 	--session-alt-subtitle)
 		case $modifiers in
 			fn) echo ;;
@@ -38,6 +39,7 @@ esac
 session="$1"
 shift
 
+# @TODO if no sesion is specified restore the most recently archived session
 for app in `get_session_apps "$session"`; do
 	osascript -e "tell application \"$app\" to launch"
 	run_app_action_for_session "$app" "$COMMAND_NAME" "$session"
