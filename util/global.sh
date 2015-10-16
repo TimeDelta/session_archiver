@@ -50,6 +50,10 @@ get_active_sessions() {
 	cat "$CURRENT_SESSIONS_FILE"
 }
 
+get_inactive_sessions() {
+        get_all_sessions | grep -vFxf <(get_active_sessions)
+}
+
 is_session_active() {
 	if [[ -n `get_active_sessions | grep -fx "$session" 2> /dev/null` ]]; then
 		echo 1
