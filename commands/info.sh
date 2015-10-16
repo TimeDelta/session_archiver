@@ -30,6 +30,7 @@ case $session in
 	--extra-alfred-items)
 		active="`get_active_sessions`"
 		print_extra_item --valid NO "Active Sessions" "${active:-There are currently no active sessions.}"
+                print_extra_item --valid NO "Inactive Sessions" "`get_inactive_sessions`"
 		exit 0 ;;
 	--session-alt-subtitle)
 		session="$1"
