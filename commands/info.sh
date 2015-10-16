@@ -24,7 +24,7 @@ case $session in
 	--description) echo "Display information about a specific session."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME [search query]"; exit 0 ;;
 	--valid) echo "NO"; exit 0 ;;
-	--complete) echo "$COMMAND_NAME"; exit 0 ;;
+        --complete) echo "$COMMAND_NAME "; exit 0 ;;
 	--arg) echo "$COMMAND_NAME <args>"; exit 0 ;;
 	--should-list-sessions) echo 1; exit 0 ;;
 	--extra-alfred-items)
