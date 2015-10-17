@@ -28,7 +28,7 @@ case $1 in
 			echo "NO"
 		fi
 		exit 0 ;;
-	--complete) echo "$COMMAND_NAME "; exit 0 ;;
+	--complete) echo "$COMMAND_NAME"; exit 0 ;;
 	--arg) echo "$COMMAND_NAME <args>"; exit 0 ;;
 	--should-list-sessions) echo 1; exit 0 ;;
 	--extra-alfred-items) exit 0 ;;

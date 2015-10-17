@@ -21,7 +21,7 @@ case $1 in
 	--description) echo "Create a session with the specified name and description."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME {name} {description}"; exit 0 ;;
 	--valid) echo "NO"; exit 0 ;;
-	--complete) echo "$COMMAND_NAME "; exit 0 ;;
+	--complete) echo "$COMMAND_NAME"; exit 0 ;;
 	--arg) echo "$COMMAND_NAME <args>"; exit 0 ;;
 	--should-list-sessions) echo 0; exit 0 ;;
 	--extra-alfred-items)
