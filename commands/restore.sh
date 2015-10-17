@@ -40,7 +40,10 @@ session="$1"
 shift
 
 # @TODO if no sesion is specified restore the most recently archived session
+IFS=$'\n'
+debug "`get_session_apps "$session"`"
 for app in `get_session_apps "$session"`; do
+	debug "launching: $app"
 	osascript -e "tell application \"$app\" to launch"
 	run_app_action_for_session "$app" "$COMMAND_NAME" "$session"
 done
