@@ -34,7 +34,7 @@ for item in `find $COMMANDS_DIR -iname "$command*.sh"`; do
 
 		arg="`"$item" --arg | sed "s/<args>/$quoted_args/"`"
 		valid="`"$item" --valid`"
-		complete="`"$item" --complete`"
+		complete="`"$item" --complete "$@"` $@"
 
 		echo "	<item uid=\"$WORKFLOW_ID.`basename "$item"`\" arg=\"$arg\" valid=\"$valid\" autocomplete=\"$complete\">"
 		echo "		<title>`"$item" --title`</title>"
