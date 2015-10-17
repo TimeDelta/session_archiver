@@ -24,7 +24,19 @@ case $1 in
         --complete) echo "$COMMAND_NAME "; exit 0 ;;
 	--arg) echo "$COMMAND_NAME <args>"; exit 0 ;;
 	--should-list-sessions) echo 0; exit 0 ;;
-	--extra-alfred-items) exit 0 ;;
+	--extra-alfred-items)
+		shift
+		name="$1"
+		shift
+		description="$@"
+		if [[ -n $name ]]; then
+			title="Create a session named \"$name\""
+			if [[ -n $description ]]; then
+				title="$title with description:"
+			fi
+			print_extra_item --valid YES --arg "create '$name' '$description'" "$title" "$description"
+		fi
+		exit 0 ;;
 	--session-alt-subtitle)
 		case $modifiers in
 			fn) echo ;;
