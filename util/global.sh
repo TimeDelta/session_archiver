@@ -68,6 +68,7 @@ get_all_sessions() {
 
 get_session_apps() {
 	local session="$1"
+	debug "Getting sessino apps from: '$SESSIONS_DIR/$session/apps'"
 	cat "$SESSIONS_DIR/$session/apps"
 }
 
@@ -115,7 +116,9 @@ run_app_action_for_session() {
 	local app="$1"
 	local action="$2"
 	local session="$3"
+	debug "$APPLICATION_ACTIONS_DIR/$app/$action.sh"
 	if [[ -e "$APPLICATION_ACTIONS_DIR/$app/$action.sh" ]]; then
+		debug Running
 		bash -c "'$UTIL/source_and_run.sh' \
 			'$UTIL/global.sh' \
 			'cd \"$SESSIONS_DIR/$session/$app\" && \"$APPLICATION_ACTIONS_DIR/$app/$action.sh\"'"
