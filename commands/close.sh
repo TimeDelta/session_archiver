@@ -32,7 +32,7 @@ case $session in
 		exit 0 ;;
 	--usage) echo "$COMMAND_NAME {session name}"; exit 0 ;;
 	--valid) echo "YES"; exit 0 ;;
-        --complete) echo "$COMMAND_NAME "; exit 0 ;;
+	--complete) echo "$COMMAND_NAME "; exit 0 ;;
 	--arg) echo "$COMMAND_NAME <args>"; exit 0 ;;
 	--should-list-sessions) echo 1; exit 0 ;;
 	--extra-alfred-items) exit 0 ;;

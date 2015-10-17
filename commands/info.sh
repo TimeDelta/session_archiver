@@ -24,13 +24,13 @@ case $session in
 	--description) echo "Display information about a specific session."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME [search query]"; exit 0 ;;
 	--valid) echo "NO"; exit 0 ;;
-        --complete) echo "$COMMAND_NAME "; exit 0 ;;
+	--complete) echo "$COMMAND_NAME "; exit 0 ;;
 	--arg) echo "$COMMAND_NAME <args>"; exit 0 ;;
 	--should-list-sessions) echo 1; exit 0 ;;
 	--extra-alfred-items)
 		active="`get_active_sessions`"
 		print_extra_item --valid NO "Active Sessions" "${active:-There are currently no active sessions.}"
-                print_extra_item --valid NO "Inactive Sessions" "`get_inactive_sessions`"
+		print_extra_item --valid NO "Inactive Sessions" "`get_inactive_sessions`"
 		exit 0 ;;
 	--session-alt-subtitle)
 		session="$1"
