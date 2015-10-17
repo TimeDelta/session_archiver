@@ -20,7 +20,14 @@ case $1 in
 	--title) echo "Restore"; exit 0 ;;
 	--description) echo "Restore the specified session."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME [search query]"; exit 0 ;;
-	--valid) echo "YES"; exit 0 ;;
+	--valid)
+		shift
+		if [[ -z $1 ]]; then
+			echo "YES"
+		else
+			echo "NO"
+		fi
+		exit 0 ;;
 	--complete) echo "$COMMAND_NAME "; exit 0 ;;
 	--arg) echo "$COMMAND_NAME <args>"; exit 0 ;;
 	--should-list-sessions) echo 1; exit 0 ;;

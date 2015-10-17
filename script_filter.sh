@@ -33,7 +33,7 @@ for item in `find $COMMANDS_DIR -iname "$command*.sh"`; do
 		debug_item "`basename "$item"` --max-args" "$max_args"
 
 		arg="`"$item" --arg | sed "s/<args>/$quoted_args/"`"
-		valid="`"$item" --valid`"
+		valid="`"$item" --valid "$@"`"
 		complete="`"$item" --complete "$@"` $@"
 
 		echo "	<item uid=\"$WORKFLOW_ID.`basename "$item"`\" arg=\"$arg\" valid=\"$valid\" autocomplete=\"$complete\">"
