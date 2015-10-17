@@ -85,7 +85,7 @@ set_session_apps() {
 
 	# write the new set of apps to file
 	while read -s line; do
-		echo >> "$session_apps_file"
+		echo "$line" >> "$session_apps_file"
 	done
 }
 
