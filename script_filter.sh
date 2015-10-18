@@ -28,7 +28,10 @@ if [[ $# -le 1 ]]; then
 		valid="`"$item" --valid`"
 		complete="`"$item" --complete`"
 
-		echo "	<item uid=\"$WORKFLOW_ID.`basename "$item"`\" arg=\"$arg\" valid=\"$valid\" autocomplete=\"$complete\">"
+		echo "	<item uid=\"$WORKFLOW_ID.`basename "$item"`\""\
+			"arg=\"$arg\""\
+			"valid=\"$valid\""\
+			"autocomplete=\"$complete\">"
 		echo "		<title>`"$item" --title`</title>"
 		echo "		<subtitle mod=\"$DESCRIPTION_MODIFIER\">`"$item" --description`</subtitle>"
 		echo "		<subtitle mod=\"$USAGE_MODIFIER\">`"$item" --usage`</subtitle>"
