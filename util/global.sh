@@ -51,7 +51,7 @@ get_active_sessions() {
 }
 
 get_inactive_sessions() {
-        get_all_sessions | grep -vFxf <(get_active_sessions)
+	get_all_sessions | grep -vFxf <(get_active_sessions)
 }
 
 is_session_active() {
