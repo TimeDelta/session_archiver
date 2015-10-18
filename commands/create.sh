@@ -16,13 +16,12 @@ while [[ $1 == "-m" ]]; do
 done
 
 case $1 in
-	--max-args) echo \-1; exit 0 ;;
 	--title) echo "Create"; exit 0 ;;
 	--description) echo "Create a session with the specified name and description."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME {name} {description}"; exit 0 ;;
 	--valid) echo "NO"; exit 0 ;;
 	--complete) echo "$COMMAND_NAME"; exit 0 ;;
-	--arg) echo "$COMMAND_NAME <args>"; exit 0 ;;
+	--arg) echo "$COMMAND_NAME"; exit 0 ;;
 	--should-list-sessions) echo 0; exit 0 ;;
 	--extra-alfred-items)
 		shift

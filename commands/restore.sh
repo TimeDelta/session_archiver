@@ -16,20 +16,12 @@ while [[ $1 == "-m" ]]; do
 done
 
 case $1 in
-	--max-args) echo \-1; exit 0 ;;
 	--title) echo "Restore"; exit 0 ;;
 	--description) echo "Restore the specified session."; exit 0 ;;
-	--usage) echo "$COMMAND_NAME [search query]"; exit 0 ;;
-	--valid)
-		shift
-		if [[ -z $1 ]]; then
-			echo "YES"
-		else
-			echo "NO"
-		fi
-		exit 0 ;;
+	--usage) echo "$COMMAND_NAME {session name}"; exit 0 ;;
+	--valid) echo "YES"; exit 0 ;;
 	--complete) echo "$COMMAND_NAME"; exit 0 ;;
-	--arg) echo "$COMMAND_NAME <args>"; exit 0 ;;
+	--arg) echo "$COMMAND_NAME"; exit 0 ;;
 	--should-list-sessions) echo 1; exit 0 ;;
 	--extra-alfred-items) exit 0 ;;
 	--session-alt-subtitle)

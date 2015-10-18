@@ -17,33 +17,31 @@ EOB
 	fi
 }
 
-command="$1"
-shift
-
-quoted_args="`quote_args "$@"`"
-
 echo "<?xml version=\"1.0\"?>"
 echo "<items>"
 
 IFS=$'\n'
-# @TODO make the create command invalid if the current name argument is the same as an existing session
-for item in `find $COMMANDS_DIR -iname "$command*.sh"`; do
-	max_args=$("$item" --max-args)
-	if [[ $# -le $(($max_args + 1)) || $max_args -eq -1 ]]; then
-		debug_item "`basename "$item"` --max-args" "$max_args"
-
-		arg="`"$item" --arg | sed "s/<args>/$quoted_args/"`"
-		valid="`"$item" --valid "$@"`"
-		complete="`"$item" --complete "$@"` $@"
+if [[ $# -le 1 ]]; then
+	command="$1"
+	for item in `find "$COMMANDS_DIR" -iname "$command*.sh"`; do
+		arg="`"$item" --arg`"
+		valid="`"$item" --valid`"
+		complete="`"$item" --complete`"
 
 		echo "	<item uid=\"$WORKFLOW_ID.`basename "$item"`\" arg=\"$arg\" valid=\"$valid\" autocomplete=\"$complete\">"
 		echo "		<title>`"$item" --title`</title>"
 		echo "		<subtitle mod=\"$DESCRIPTION_MODIFIER\">`"$item" --description`</subtitle>"
 		echo "		<subtitle mod=\"$USAGE_MODIFIER\">`"$item" --usage`</subtitle>"
 		echo "	</item>"
-	fi
-done
+	done
+fi
 
+command="$1"
+shift
+
+quoted_args="`quote_args "$@"`"
+
+# @TODO make the create command invalid if the current name argument is the same as an existing session
 if [[ -e "$COMMANDS_DIR/$command.sh" ]]; then
 	"$COMMANDS_DIR/$command.sh" --extra-alfred-items "$@"
 	if [[ `"$COMMANDS_DIR/$command.sh" --should-list-sessions` -eq 1 ]]; then

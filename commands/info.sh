@@ -19,13 +19,12 @@ session="$1"
 shift
 
 case $session in
-	--max-args) echo \-1; exit 0 ;;
 	--title) echo "Info"; exit 0 ;;
 	--description) echo "Display information about a specific session."; exit 0 ;;
-	--usage) echo "$COMMAND_NAME [search query]"; exit 0 ;;
+	--usage) echo "$COMMAND_NAME [session name]"; exit 0 ;;
 	--valid) echo "NO"; exit 0 ;;
 	--complete) echo "$COMMAND_NAME"; exit 0 ;;
-	--arg) echo "$COMMAND_NAME <args>"; exit 0 ;;
+	--arg) echo "$COMMAND_NAME"; exit 0 ;;
 	--should-list-sessions) echo 1; exit 0 ;;
 	--extra-alfred-items)
 		if [[ $# -eq 0 ]]; then
