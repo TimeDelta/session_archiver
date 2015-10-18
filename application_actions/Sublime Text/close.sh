@@ -1,5 +1,7 @@
 #!/bin/bash
 
 # close the current Sublime project
-subl --command close_project
-subl --command close_workspace
+subl="`get_app_path "Sublime Text"`/Contents/SharedSupport/bin/subl"
+debug "subl: $subl"
+"$subl" --command close_project
+"$subl" --command close_workspace
