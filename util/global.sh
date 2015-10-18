@@ -2,6 +2,7 @@
 source ./global_vars.sh
 
 debug() {
+	# @TODO add debug indentation tracking using global var
 	echo "$@" >&2
 }
 
