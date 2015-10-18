@@ -47,6 +47,11 @@ print_extra_item() {
 EOB
 }
 
+get_app_path() {
+	local lsregister='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister'
+	$lsregister -dump | grep "$*.app" | sed -E 's/.*path: +//'
+}
+
 get_active_sessions() {
 	cat "$CURRENT_SESSIONS_FILE"
 }
