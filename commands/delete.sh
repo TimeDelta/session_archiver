@@ -42,6 +42,7 @@ if [[ `is_session_active "$session"` -eq 1 ]]; then
 	msg="Cannot delete active session: $session"
 	echo "$msg"
 	debug "$msg"
+	exit 1
 fi
 
 debug "Deleting '$SESSIONS_DIR/$session'"
