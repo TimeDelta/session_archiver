@@ -129,7 +129,7 @@
 	<key>createdby</key>
 	<string>Bryan Herman</string>
 	<key>description</key>
-	<string>Store and close selected open apps for a later time.</string>
+	<string>Quickly switch between projects by saving your work in certain apps, closing them, and opening a different project in other apps.</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
