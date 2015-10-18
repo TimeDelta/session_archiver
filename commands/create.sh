@@ -97,3 +97,8 @@ done
 echo "$chosen_apps" | set_session_apps "$name"
 set_session_uuid "$name" "`uuidgen`"
 set_session_description "$name" "$description"
+
+echo -n "Created Session $name"
+if [[ -n $description ]]; then
+	echo " ($description)"
+fi

@@ -59,8 +59,72 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>58C750D0-ABDE-4E22-8621-82562BEB78EE</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A9842893-74ED-43EB-8975-6CDFF0168921</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>82B837A1-9F90-41DB-80BD-4C4B40A58895</key>
-		<array/>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A9842893-74ED-43EB-8975-6CDFF0168921</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>95D183C9-2C88-4A60-8CBC-A69E0E07C11A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A9842893-74ED-43EB-8975-6CDFF0168921</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>B41D05D2-D425-4DEE-A9CA-6E4827E6508E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A9842893-74ED-43EB-8975-6CDFF0168921</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>F0A73390-532F-437D-8FC4-1C3DFE6D0E98</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A9842893-74ED-43EB-8975-6CDFF0168921</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>F56FDF59-9F46-4917-AE2E-C91241476CAC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A9842893-74ED-43EB-8975-6CDFF0168921</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 	</dict>
 	<key>createdby</key>
 	<string>Bryan Herman</string>
@@ -80,7 +144,8 @@
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
-				<string>./process_command.sh -m alt {query}</string>
+				<string>echo entered alfred.workflow.action.script with alt &gt;&amp;2
+./process_command.sh -m alt {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -99,7 +164,8 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>./process_command.sh -m cmd {query}</string>
+				<string>echo entered alfred.workflow.action.script with cmd &gt;&amp;2
+./process_command.sh -m cmd {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -118,7 +184,8 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>./process_command.sh -m ctrl {query}</string>
+				<string>echo entered alfred.workflow.action.script with ctrl &gt;&amp;2
+./process_command.sh -m ctrl {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -145,7 +212,7 @@
 				<key>queuedelaymode</key>
 				<integer>0</integer>
 				<key>queuemode</key>
-				<integer>1</integer>
+				<integer>2</integer>
 				<key>runningsubtext</key>
 				<string>Please Wait</string>
 				<key>script</key>
@@ -167,12 +234,36 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>A9842893-74ED-43EB-8975-6CDFF0168921</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>./process_command.sh -m shift {query}</string>
+				<string>echo entered alfred.workflow.action.script with shift &gt;&amp;2
+./process_command.sh -m shift {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -191,7 +282,8 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>./process_command.sh -m fn {query}</string>
+				<string>echo entered alfred.workflow.action.script with fn &gt;&amp;2
+./process_command.sh -m fn {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -210,7 +302,8 @@
 				<key>escaping</key>
 				<integer>34</integer>
 				<key>script</key>
-				<string>./process_command.sh {query}</string>
+				<string>echo entered alfred.workflow.action.script &gt;&amp;2
+./process_command.sh {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -245,6 +338,11 @@
 		<dict>
 			<key>ypos</key>
 			<real>250</real>
+		</dict>
+		<key>A9842893-74ED-43EB-8975-6CDFF0168921</key>
+		<dict>
+			<key>ypos</key>
+			<real>310</real>
 		</dict>
 		<key>B41D05D2-D425-4DEE-A9CA-6E4827E6508E</key>
 		<dict>

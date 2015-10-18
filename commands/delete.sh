@@ -46,3 +46,5 @@ fi
 
 debug "Deleting '$SESSIONS_DIR/$session'"
 rm -rf "$SESSIONS_DIR/$session"
+
+echo "Deleted Session: $session"

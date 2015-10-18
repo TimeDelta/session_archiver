@@ -73,3 +73,5 @@ done
 
 # remove the closed session from the current sessions file
 sed -i "" "/$session/d" "$CURRENT_SESSIONS_FILE"
+
+echo "Closed Session: $session"

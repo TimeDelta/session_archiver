@@ -56,3 +56,5 @@ for app in `get_session_apps "$session"`; do
 done
 
 echo "$session" > "$CURRENT_SESSIONS_FILE"
+
+echo "Restored Session: $session"
