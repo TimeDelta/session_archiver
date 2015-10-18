@@ -1,4 +1,0 @@
-	<item uid="com.bryanherman.sessionarchiver.alfred_command_name" arg="alfred_command_name" valid="YES" autocomplete="alfred_command_name ">
-		<title>Create New Session</title>
-		<subtitle>alfred_command_name {name} {description}</subtitle>
-	</item>

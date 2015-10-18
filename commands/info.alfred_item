@@ -1,4 +1,0 @@
-	<item uid="com.bryanherman.sessionarchiver.alfred_command_name" arg="alfred_command_name" valid="NO" autocomplete="alfred_command_name ">
-		<title>Get Session Info</title>
-		<subtitle>alfred_command_name [search]</subtitle>
-	</item>
