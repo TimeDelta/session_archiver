@@ -62,6 +62,15 @@ is_session_active() {
 	fi
 }
 
+set_session_active() {
+	echo "$session" > "$CURRENT_SESSIONS_FILE"
+}
+
+set_session_inactive() {
+	# remove the session from the current sessions file
+	sed -i "" "/$session/d" "$CURRENT_SESSIONS_FILE"
+}
+
 get_all_sessions() {
 	ls -1 "$SESSIONS_DIR"
 }

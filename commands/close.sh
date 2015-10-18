@@ -71,7 +71,6 @@ for app in $apps_to_close; do
 	echo "$app" >> "$SESSION_FILE"
 done
 
-# remove the closed session from the current sessions file
-sed -i "" "/$session/d" "$CURRENT_SESSIONS_FILE"
+set_session_inactive "$session"
 
 echo "Closed Session: $session"
