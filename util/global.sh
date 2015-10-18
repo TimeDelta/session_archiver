@@ -2,8 +2,16 @@
 source ./global_vars.sh
 
 debug() {
-	# @TODO add debug indentation tracking using global var
+	echo -ne "$DEBUG_INDENTATION" >&2
 	echo "$@" >&2
+}
+
+indent_debug() {
+	DEBUG_INDENTATION="${DEBUG_INDENTATION}	"
+}
+
+unindent_debug() {
+	DEBUG_INDENTATION="$(echo "$DEBUG_INDENTATION" | sed "s/`echo -e '\t'`//")"
 }
 
 quote_args() {
