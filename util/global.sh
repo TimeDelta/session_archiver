@@ -77,7 +77,7 @@ get_all_sessions() {
 
 get_session_apps() {
 	local session="$1"
-	debug "Getting sessino apps from: '$SESSIONS_DIR/$session/apps'"
+	debug "Getting session apps from: '$SESSIONS_DIR/$session/apps'"
 	cat "$SESSIONS_DIR/$session/apps"
 }
 
