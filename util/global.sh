@@ -60,6 +60,25 @@ get_app_path() {
 	$lsregister -dump | grep "$*.app" | sed -E 's/.*path: +//'
 }
 
+get_installed_apps() {
+	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -dump \
+	| grep --only-matching "/.*\.app" \
+	| egrep -v '//|^/System|/Library/|^/Resources|/Xcode.app/Contents|/com\\?\.[^/.]+.*\.app|\.app/|^/Users/[^/]/\.Trash/' \
+	| {
+		while read -s line; do
+			if [[ -e "$line" ]]; then
+				echo "$line"
+			fi
+		done
+	} | tr '\n' '\0' \
+	| xargs -0L 1 basename \
+	| sort \
+	| uniq \
+	| sed -e 's/.app$//' -e 's/^/\"/' -e 's/$/\"/' \
+	| tr '\n' ',' \
+	| sed 's/,$//'
+}
+
 get_active_sessions() {
 	cat "$CURRENT_SESSIONS_FILE"
 }
