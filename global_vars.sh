@@ -1,6 +1,7 @@
 #!/bin/bash
-# @TODO make this assignment dynamic by parsing info.plist
-export WORKFLOW_ID="com.bryanherman.sessionarchiver"
+export WORKFLOW_ID="$(grep -A 1 bundleid info.plist \
+	| sed -nE 's:</?string>::g; 2p' \
+	| sed -E "s/^( |`echo -e '\t'`)*//;s/( |`echo -e '\t'`)*$//")"
 
 # directory / file paths
 export ROOT_DIR="`pwd`"
