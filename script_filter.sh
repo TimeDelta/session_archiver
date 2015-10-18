@@ -50,15 +50,16 @@ if [[ -e "$COMMANDS_DIR/$command.sh" ]]; then
 		query="$@"
 		debug_item query "$query"
 		for session in `get_all_sessions | egrep "$query.*"`; do
-			echo "<item uid=\"`get_session_uuid "$session"`\""\
+			echo "	<item uid=\"`get_session_uuid "$session"`\""\
 				"arg=\"$command $session `echo "$@" | sed "s/^$session//"`\""\
-				"valid=\"YES\" autocomplete=\"$session\">"
-			echo "	<title>$session</title>"
-			echo "	<subtitle>`get_session_description "$session"`</subtitle>"
+				"valid=\"YES\""\
+				"autocomplete=\"$command $session `echo "$@" | sed "s/^$session//"`\">"
+			echo "		<title>$session</title>"
+			echo "		<subtitle>`get_session_description "$session"`</subtitle>"
 			for mod in fn ctrl cmd alt shift; do
-				echo "	<subtitle mod=\"$mod\">`"$COMMANDS_DIR/$command.sh" -m $mod --session-alt-subtitle "$session"`</subtitle>"
+				echo "		<subtitle mod=\"$mod\">`"$COMMANDS_DIR/$command.sh" -m $mod --session-alt-subtitle "$session"`</subtitle>"
 			done
-			echo "</item>"
+			echo "	</item>"
 		done
 	fi
 fi
