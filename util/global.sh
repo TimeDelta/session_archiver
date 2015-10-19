@@ -91,7 +91,7 @@ print_session_items() {
 		debug "$session"
 		print_item\
 			--uuid "$COMMAND_NAME.`get_session_uuid "$session"`"\
-			--arg "$COMMAND_NAME $session `quote_args "$@"`"\
+			--arg "$COMMAND_NAME '$session' `quote_args "$@"`"\
 			--complete "$COMMAND_NAME $session `echo "$@" | sed "s/^$session//"`"\
 			--valid "`run_command "$COMMAND_NAME" --valid "$@"`"\
 			--fn "`mod_sub fn "$session"`"\
