@@ -21,13 +21,8 @@ shift
 case $session in
 	--title) echo "Close"; exit 0 ;;
 	--description)
-		session="$1"
-		if [[ -z $session ]]; then
-			active="`get_active_sessions | tr '\n' ',' | sed 's/,$//;s/,/, /'`"
-			echo "Close all active sessions (${active:-No active sessions})."
-		else
-			echo "Close the specified active session."
-		fi
+		active="`get_active_sessions | tr '\n' ',' | sed 's/,$//;s/,/, /'`"
+		echo "Close all active sessions (${active:-No active sessions})."
 		exit 0 ;;
 	--usage) echo "$COMMAND_NAME {session name}"; exit 0 ;;
 	--valid) echo "YES"; exit 0 ;;
@@ -57,9 +52,10 @@ if [[ -z $session ]]; then
 	exit 0
 fi
 
+debug "Getting apps that need closed"
 apps_to_close="$(osascript <<EOT
 	tell application "System Events"
-		set openApps to (name of every process whose name is in {`get_session_apps "$session" | tr '\n' ',' | sed 's/,$//'`})
+		set openApps to (name of every process)
 	end tell
 	set output to ""
 	repeat with currentLine in openApps
@@ -68,15 +64,17 @@ apps_to_close="$(osascript <<EOT
 	output
 EOT
 )"
+apps_to_close="`echo "$apps_to_close" | grep -f <(get_session_apps "$session")`"
+debug "$apps_to_close"
 
 IFS=$'\n'
 
+debug "closing apps"
 # close the apps associated with the specified session
 # @NOTE apps still get closed even if they're part of another active session
 for app in $apps_to_close; do
 	run_app_action_for_session "$app" "$COMMAND_NAME" "$session"
 	osascript -e "tell application \"$app\" to quit"
-	echo "$app" >> "$SESSION_FILE"
 done
 
 set_session_inactive "$session"

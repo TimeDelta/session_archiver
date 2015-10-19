@@ -7,11 +7,11 @@ debug() {
 }
 
 indent_debug() {
-	DEBUG_INDENTATION="${DEBUG_INDENTATION}	"
+	export DEBUG_INDENTATION="${DEBUG_INDENTATION}	"
 }
 
 unindent_debug() {
-	DEBUG_INDENTATION="$(echo "$DEBUG_INDENTATION" | sed "s/`echo -e '\t'`//")"
+	export DEBUG_INDENTATION="$(echo "$DEBUG_INDENTATION" | sed "s/`echo -e '\t'`//")"
 }
 
 quote_args() {
@@ -35,7 +35,7 @@ print_item() {
 	while [[ $# -gt 0 && -z $title ]]; do
 		case $1 in
 			--arg) arg="$2" ;;
-			--complete) complete="$2" ;;
+			--complete) complete="autocomplete=\"$2\"" ;;
 			--copy) copy="$2" ;;
 			--valid) valid="$2" ;;
 			--uuid) uid="uid=\"$2\"" ;;
@@ -50,10 +50,9 @@ print_item() {
 	done
 	subtitle="$1"
 	arg="${arg:-$title}"
-	complete="${complete:-$arg}"
 	copy="${copy:-$subtitle}"
 
-	echo "	<item $uid arg=\"$arg\" valid=\"$valid\" autocomplete=\"$complete\">"
+	echo "	<item $uid arg=\"$arg\" valid=\"$valid\" $complete>"
 	echo "		<title>$title</title>"
 	echo "		<subtitle>$subtitle</subtitle>"
 	for mod in fn ctrl cmd shift alt; do
@@ -67,37 +66,47 @@ print_item() {
 	unset fn ctrl cmd shift alt
 }
 
-print_session_item() {
+print_session_items() {
+	indent_debug
+	debug "printing session items:"
+	indent_debug
+
 	mod_sub() {
 		local mod="$1" session="$2"
-		"$COMMANDS_DIR/$COMMAND_NAME.sh" -m $mod --session-alt-subtitle "$session"
+		run_command "$COMMAND_NAME" -m $mod --session-alt-subtitle "$session"
 	}
 
-	local session="$1"
+	local sessions="$1"
 	shift
 
-	print_item\
-		--uuid "$COMMAND_NAME.`get_session_uuid "$session"`"\
-		--arg "$COMMAND_NAME $session `quote_args "$@"`"\
-		--complete "$COMMAND_NAME $session `echo "$@" | sed "s/^$session//"`"\
-		--valid YES\
-		--fn "`mod_sub fn "$session"`"\
-		--ctrl "`mod_sub ctrl "$session"`"\
-		--cmd "`mod_sub cmd "$session"`"\
-		--alt "`mod_sub alt "$session"`"\
-		--shift "`mod_sub shift "$session"`"\
-		"$session"\
-		"`get_session_description "$session"`"
-	unset mod_sub
-}
-
-print_session_items() {
 	local session OLD_IFS="$IFS"
 	IFS=$'\n'
-	for session in "$@"; do
-		print_session_item "$session" "$@"
+	for session in $sessions; do
+		debug "$session"
+		print_item\
+			--uuid "$COMMAND_NAME.`get_session_uuid "$session"`"\
+			--arg "$COMMAND_NAME $session `quote_args "$@"`"\
+			--complete "$COMMAND_NAME $session `echo "$@" | sed "s/^$session//"`"\
+			--valid "`run_command "$COMMAND_NAME" --valid "$@"`"\
+			--fn "`mod_sub fn "$session"`"\
+			--ctrl "`mod_sub ctrl "$session"`"\
+			--cmd "`mod_sub cmd "$session"`"\
+			--alt "`mod_sub alt "$session"`"\
+			--shift "`mod_sub shift "$session"`"\
+			"$session"\
+			"`get_session_description "$session"`"
 	done
 	IFS="$OLD_IFS"
+	unset mod_sub
+
+	unindent_debug
+	unindent_debug
+}
+
+run_command() {
+	local command="$1"
+	shift
+	"$COMMANDS_DIR/$command.sh" "$@"
 }
 
 get_app_path() {
@@ -130,11 +139,23 @@ get_active_sessions() {
 }
 
 get_inactive_sessions() {
-	get_all_sessions | grep -vFxf <(get_active_sessions)
+	indent_debug
+	debug "getting inactive sessions:"
+
+	get_all_sessions | {
+		local active="`get_active_sessions`"
+		if [[ -n $active ]]; then
+			grep -vFxf <(echo "$active")
+		else
+			tr '\n' '\0' | xargs -0L 1 echo
+		fi
+	}
+
+	unindent_debug
 }
 
 is_session_active() {
-	if [[ -n `get_active_sessions | grep -fx "$session" 2> /dev/null` ]]; then
+	if [[ -n `get_active_sessions | grep -fx "$1" 2> /dev/null` ]]; then
 		echo 1
 	else
 		echo 0
@@ -142,12 +163,12 @@ is_session_active() {
 }
 
 set_session_active() {
-	echo "$session" > "$CURRENT_SESSIONS_FILE"
+	echo "$1" > "$CURRENT_SESSIONS_FILE"
 }
 
 set_session_inactive() {
 	# remove the session from the current sessions file
-	sed -i "" "/$session/d" "$CURRENT_SESSIONS_FILE"
+	sed -i "" "/$1/d" "$CURRENT_SESSIONS_FILE"
 }
 
 get_all_sessions() {
@@ -155,9 +176,13 @@ get_all_sessions() {
 }
 
 get_session_apps() {
+	indent_debug
+
 	local session="$1"
-	debug "Getting session apps from: '$SESSIONS_DIR/$session/apps'"
+	debug "Getting session apps for: $session"
 	cat "$SESSIONS_DIR/$session/apps"
+
+	unindent_debug
 }
 
 # read apps from stdin (one per line)
@@ -166,7 +191,7 @@ set_session_apps() {
 	local session="$1"
 	local session_apps_file="$SESSIONS_DIR/$session/apps"
 
-	# make sure the apps file for the specified session exists exists
+	# make sure the apps file for the specified session exists
 	touch "$session_apps_file"
 
 	# delete any existing apps
@@ -187,6 +212,8 @@ get_session_uuid() {
 set_session_uuid() {
 	local session="$1"
 	local uuid="$2"
+	# touch the file to make sure it gets created even if uuid is empty
+	touch "$SESSIONS_DIR/$session/uuid"
 	echo "$uuid" > "$SESSIONS_DIR/$session/uuid"
 }
 
@@ -198,6 +225,8 @@ get_session_description() {
 set_session_description() {
 	local session="$1"
 	local description="$2"
+	# touch the file to make sure it gets created even if description is empty
+	touch "$SESSIONS_DIR/$session/description"
 	echo "$description" > "$SESSIONS_DIR/$session/description"
 }
 

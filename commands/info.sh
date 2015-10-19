@@ -22,19 +22,27 @@ case $session in
 	--title) echo "Info"; exit 0 ;;
 	--description) echo "Display information about a specific session."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME [session name]"; exit 0 ;;
-	--valid) echo "NO"; exit 0 ;;
+	--valid)
+		if [[ $# -gt 0 ]]; then
+			echo "YES"
+		else
+			echo "NO"
+		fi
+		exit 0 ;;
 	--complete) echo "$COMMAND_NAME"; exit 0 ;;
 	--arg) echo "$COMMAND_NAME"; exit 0 ;;
 	--extra-alfred-items)
 		session="$1"
 		shift
 
-		print_session_items "`get_all_sessions | grep "$session.*"`"
+		print_session_items "`get_all_sessions | egrep "^$session.*"`" "$@"
 
 		if [[ -z $session ]]; then
 			active="`get_active_sessions`"
-			print_item --valid NO "Active Sessions" "${active:-There are currently no active sessions.}"
-			print_item --valid NO "Inactive Sessions" "`get_inactive_sessions`"
+			print_item --valid NO "Active Sessions" "${active:-There are no active sessions.}"
+
+			inactive="`get_inactive_sessions`"
+			print_item --valid NO "Inactive Sessions" "${inactive:-There are no inactive sessions.}"
 		else
 			matching_sessions="`get_all_sessions | grep "^$session$"`"
 			if [[ -n $matching_sessions ]]; then

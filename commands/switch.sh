@@ -22,7 +22,13 @@ case $session in
 	--title) echo "Switch"; exit 0 ;;
 	--description) echo "Close all active sessions and restore the chosen session."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME {session name}"; exit 0 ;;
-	--valid) echo "NO"; exit 0 ;;
+	--valid)
+		if [[ $# -gt 0 ]]; then
+			echo "YES"
+		else
+			echo "NO"
+		fi
+		exit 0 ;;
 	--complete) echo "$COMMAND_NAME"; exit 0 ;;
 	--arg) echo "$COMMAND_NAME"; exit 0 ;;
 	--extra-alfred-items)
@@ -42,9 +48,9 @@ esac
 
 IFS=$'\n'
 for current in `get_active_sessions`; do
-	"$COMMANDS_DIR"/close.sh "$current"
+	run_command close "$current"
 done
 
-"$COMMANDS_DIR/"/restore.sh "$session"
+run_command restore "$session"
 
 unindent_debug

@@ -22,7 +22,13 @@ case $session in
 	--title) echo "Delete"; exit 0 ;;
 	--description) echo "Delete the specified session (must be inactive)."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME {session name}"; exit 0 ;;
-	--valid) echo "NO"; exit 0 ;;
+	--valid)
+		if [[ $# -gt 0 ]]; then
+			echo "YES"
+		else
+			echo "NO"
+		fi
+		exit 0 ;;
 	--complete) echo "$COMMAND_NAME"; exit 0 ;;
 	--arg) echo "$COMMAND_NAME"; exit 0 ;;
 	--extra-alfred-items)
