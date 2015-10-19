@@ -1,8 +1,8 @@
 #!/bin/bash
 source ./util/global.sh
 
-debug "in `basename "$0"`:"
-debug "$@"
+debug "`basename "$0"` `quote_args "$@"`"
+indent_debug
 
 COMMAND_NAME="`basename "${0%.*}"`"
 
@@ -15,25 +15,26 @@ while [[ $1 == "-m" ]]; do
 	shift 2
 done
 
-case $1 in
+name="$1"
+shift
+
+case $name in
 	--title) echo "Create"; exit 0 ;;
 	--description) echo "Create a session with the specified name and description."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME {name} {description}"; exit 0 ;;
 	--valid) echo "NO"; exit 0 ;;
 	--complete) echo "$COMMAND_NAME"; exit 0 ;;
 	--arg) echo "$COMMAND_NAME"; exit 0 ;;
-	--should-list-sessions) echo 0; exit 0 ;;
 	--extra-alfred-items)
-		shift
 		name="$1"
 		shift
-		description="$@"
+		description="$*"
 		if [[ -n $name ]]; then
 			title="Create a session named \"$name\""
 			if [[ -n $description ]]; then
 				title="$title with description:"
 			fi
-			print_extra_item --valid YES --arg "create '$name' '$description'" "$title" "$description"
+			print_item --valid YES --arg "$COMMAND_NAME '$name' '$description'" "$title" "$description"
 		fi
 		exit 0 ;;
 	--session-alt-subtitle)
@@ -47,14 +48,14 @@ case $1 in
 		exit 0 ;;
 esac
 
-name="$1"
-shift
-description="$@"
+description="$*"
 debug "description: $description"
 
 debug "getting installed apps"
+indent_debug
 installed_apps="`get_installed_apps`"
 debug "$installed_apps"
+unindent_debug
 
 debug "getting chosen apps"
 chosen_apps="$(osascript <<EOT
@@ -70,12 +71,14 @@ EOT
 debug "$chosen_apps"
 
 debug "Running application action '$COMMAND_NAME' for chosen apps"
+indent_debug
 IFS=$'\n'
 for app in $chosen_apps; do
 	debug "	$app"
 	mkdir -p "$SESSIONS_DIR/$name/$app"
 	run_app_action_for_session "$app" "$COMMAND_NAME" "$name"
 done
+unindent_debug
 
 echo "$chosen_apps" | set_session_apps "$name"
 set_session_uuid "$name" "`uuidgen`"
@@ -85,3 +88,5 @@ echo -n "Created Session $name"
 if [[ -n $description ]]; then
 	echo " ($description)"
 fi
+
+unindent_debug

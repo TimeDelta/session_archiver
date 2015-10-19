@@ -25,10 +25,11 @@ quote_args() {
 	echo "$args"
 }
 
-print_extra_item() {
+print_item() {
 	# after options:
 	# 	$1 = title
 	# 	$2 = subtitle
+	fn= ctrl= cmd= shift= alt=
 	local title subtitle uuid arg complete copy valid='YES'
 	local num_shifts
 	while [[ $# -gt 0 && -z $title ]]; do
@@ -37,7 +38,12 @@ print_extra_item() {
 			--complete) complete="$2" ;;
 			--copy) copy="$2" ;;
 			--valid) valid="$2" ;;
-			--uuid) uuid="uid=\"$2\"" ;;
+			--uuid) uid="uid=\"$2\"" ;;
+			--fn) export fn="$2" ;;
+			--ctrl) export ctrl="$2" ;;
+			--cmd) export cmd="$2" ;;
+			--shift) export shift="$2" ;;
+			--alt) export alt="$2" ;;
 			*) title="$1"; num_shifts=1 ;;
 		esac
 		shift ${num_shifts:-2}
@@ -46,13 +52,52 @@ print_extra_item() {
 	arg="${arg:-$title}"
 	complete="${complete:-$arg}"
 	copy="${copy:-$subtitle}"
-	cat <<EOB
-		<item $uid arg="$arg" valid="$valid" autocomplete="$complete">
-			<title>$title</title>
-			<subtitle>$subtitle</subtitle>
-			<copy>$copy</copy>
-		</item>
-EOB
+
+	echo "	<item $uid arg=\"$arg\" valid=\"$valid\" autocomplete=\"$complete\">"
+	echo "		<title>$title</title>"
+	echo "		<subtitle>$subtitle</subtitle>"
+	for mod in fn ctrl cmd shift alt; do
+		local mod_sub="`env | grep "^$mod=" | sed 's/.*=//'`"
+		if [[ -n $mod_sub ]]; then
+			echo "		<subtitle mod=\"$mod\">$mod_sub</subtitle>"
+		fi
+	done
+	echo "		<copy>$copy</copy>"
+	echo "	</item>"
+	unset fn ctrl cmd shift alt
+}
+
+print_session_item() {
+	mod_sub() {
+		local mod="$1" session="$2"
+		"$COMMANDS_DIR/$COMMAND_NAME.sh" -m $mod --session-alt-subtitle "$session"
+	}
+
+	local session="$1"
+	shift
+
+	print_item\
+		--uuid "$COMMAND_NAME.`get_session_uuid "$session"`"\
+		--arg "$COMMAND_NAME $session `quote_args "$@"`"\
+		--complete "$COMMAND_NAME $session `echo "$@" | sed "s/^$session//"`"\
+		--valid YES\
+		--fn "`mod_sub fn "$session"`"\
+		--ctrl "`mod_sub ctrl "$session"`"\
+		--cmd "`mod_sub cmd "$session"`"\
+		--alt "`mod_sub alt "$session"`"\
+		--shift "`mod_sub shift "$session"`"\
+		"$session"\
+		"`get_session_description "$session"`"
+	unset mod_sub
+}
+
+print_session_items() {
+	local session OLD_IFS="$IFS"
+	IFS=$'\n'
+	for session in "$@"; do
+		print_session_item "$session" "$@"
+	done
+	IFS="$OLD_IFS"
 }
 
 get_app_path() {
@@ -65,6 +110,7 @@ get_installed_apps() {
 	| grep --only-matching "/.*\.app" \
 	| egrep -v '//|^/System|/Library/|^/Resources|/Xcode.app/Contents|/com\\?\.[^/.]+.*\.app|\.app/|^/Users/[^/]/\.Trash/' \
 	| {
+		local line
 		while read -s line; do
 			if [[ -e "$line" ]]; then
 				echo "$line"
@@ -127,6 +173,7 @@ set_session_apps() {
 	: > "$session_apps_file"
 
 	# write the new set of apps to file
+	local line
 	while read -s line; do
 		echo "$line" >> "$session_apps_file"
 	done
@@ -155,15 +202,17 @@ set_session_description() {
 }
 
 run_app_action_for_session() {
-	local app="$1"
-	local action="$2"
-	local session="$3"
+	local app="$1" action="$2" session="$3"
+	indent_debug
 	debug "$APPLICATION_ACTIONS_DIR/$app/$action.sh"
 	if [[ -e "$APPLICATION_ACTIONS_DIR/$app/$action.sh" ]]; then
+		indent_debug
 		debug Running
 		"$UTIL/source_and_run.sh"\
 			"$UTIL/global.sh"\
 			--indir "$SESSIONS_DIR/$session/$app"\
 			--script "$APPLICATION_ACTIONS_DIR/$app/$action.sh"
+		unindent_debug
 	fi
+	unindent_debug
 }

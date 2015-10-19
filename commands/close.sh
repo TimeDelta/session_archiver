@@ -1,8 +1,8 @@
 #!/bin/bash
 source ./util/global.sh
 
-debug "in `basename "$0"`:"
-debug "$@"
+debug "`basename "$0"` `quote_args "$@"`"
+indent_debug
 
 COMMAND_NAME="`basename "${0%.*}"`"
 
@@ -33,8 +33,10 @@ case $session in
 	--valid) echo "YES"; exit 0 ;;
 	--complete) echo "$COMMAND_NAME"; exit 0 ;;
 	--arg) echo "$COMMAND_NAME"; exit 0 ;;
-	--should-list-sessions) echo 1; exit 0 ;;
-	--extra-alfred-items) exit 0 ;;
+	--extra-alfred-items)
+		query="$*"
+		print_session_items "`get_active_sessions | grep "$query.*"`"
+		exit 0 ;;
 	--session-alt-subtitle)
 		case $modifiers in
 			fn) echo ;;
@@ -73,3 +75,5 @@ done
 set_session_inactive "$session"
 
 echo "Closed Session: $session"
+
+unindent_debug

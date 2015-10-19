@@ -2,6 +2,9 @@
 source "$1"
 shift
 
+debug "`basename "$0"` `quote_args "$@"`"
+indent_debug
+
 if [[ $1 == "--indir" ]]; then
 	cd "$2"
 	shift 2
@@ -15,3 +18,5 @@ if [[ $1 == "--script" ]]; then
 fi
 
 $do_source "$@"
+
+unindent_debug

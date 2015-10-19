@@ -1,8 +1,8 @@
 #!/bin/bash
 source ./util/global.sh
 
-debug "in `basename "$0"`:"
-debug "$@"
+debug "`basename "$0"` `quote_args "$@"`"
+indent_debug
 
 COMMAND_NAME="`basename "${0%.*}"`"
 
@@ -25,16 +25,17 @@ case $session in
 	--valid) echo "NO"; exit 0 ;;
 	--complete) echo "$COMMAND_NAME"; exit 0 ;;
 	--arg) echo "$COMMAND_NAME"; exit 0 ;;
-	--should-list-sessions) echo 1; exit 0 ;;
 	--extra-alfred-items)
-		if [[ $# -eq 0 ]]; then
-			active="`get_active_sessions`"
-			print_extra_item --valid NO "Active Sessions" "${active:-There are currently no active sessions.}"
-			print_extra_item --valid NO "Inactive Sessions" "`get_inactive_sessions`"
-		else
-			session="$1"
-			shift
+		session="$1"
+		shift
 
+		print_session_items "`get_all_sessions | grep "$session.*"`"
+
+		if [[ -z $session ]]; then
+			active="`get_active_sessions`"
+			print_item --valid NO "Active Sessions" "${active:-There are currently no active sessions.}"
+			print_item --valid NO "Inactive Sessions" "`get_inactive_sessions`"
+		else
 			matching_sessions="`get_all_sessions | grep "^$session$"`"
 			if [[ -n $matching_sessions ]]; then
 				session_apps="`get_session_apps "$session"`"
@@ -46,7 +47,7 @@ case $session in
 					for app in `get_session_apps "$session"`; do
 						description="Show this session's info about the saved state of $app"
 						autocomplete="$COMMAND_NAME $session $app"
-						print_extra_item --valid NO --complete "$autocomplete" "$app" "$description"
+						print_item --valid NO --complete "$autocomplete" "$app" "$description"
 					done
 				fi
 			fi
@@ -63,3 +64,5 @@ case $session in
 		esac
 		exit 0 ;;
 esac
+
+unindent_debug

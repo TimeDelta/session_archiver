@@ -1,8 +1,8 @@
 #!/bin/bash
 source ./util/global.sh
 
-debug "in `basename "$0"`:"
-debug "$@"
+debug "`basename "$0"` `quote_args "$@"`"
+indent_debug
 
 COMMAND_NAME="`basename "${0%.*}"`"
 
@@ -15,15 +15,20 @@ while [[ $1 == "-m" ]]; do
 	shift 2
 done
 
-case $1 in
+session="$1"
+shift
+
+case $session in
 	--title) echo "Switch"; exit 0 ;;
 	--description) echo "Close all active sessions and restore the chosen session."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME {session name}"; exit 0 ;;
 	--valid) echo "NO"; exit 0 ;;
 	--complete) echo "$COMMAND_NAME"; exit 0 ;;
 	--arg) echo "$COMMAND_NAME"; exit 0 ;;
-	--should-list-sessions) echo 1; exit 0 ;;
-	--extra-alfred-items) exit 0 ;;
+	--extra-alfred-items)
+		query="$*"
+		print_session_items "`get_inactive_sessions | grep "$query.*"`"
+		exit 0 ;;
 	--session-alt-subtitle)
 		case $modifiers in
 			fn) echo ;;
@@ -35,12 +40,11 @@ case $1 in
 		exit 0 ;;
 esac
 
-session="$1"
-shift
-
 IFS=$'\n'
 for current in `get_active_sessions`; do
 	"$COMMANDS_DIR"/close.sh "$current"
 done
 
 "$COMMANDS_DIR/"/restore.sh "$session"
+
+unindent_debug
