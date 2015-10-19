@@ -42,7 +42,6 @@ fi
 command="$1"
 shift
 
-# @TODO make the create command invalid if the current name argument is the same as an existing session
 if [[ -e "$COMMANDS_DIR/$command.sh" ]]; then
 	"$COMMANDS_DIR/$command.sh" --extra-alfred-items "$@"
 fi
