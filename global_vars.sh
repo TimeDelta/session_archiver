@@ -3,6 +3,7 @@ export WORKFLOW_ID="$(grep -A 1 bundleid info.plist \
 	| sed -nE 's:</?string>::g; 2p' \
 	| sed -E "s/^( |`echo -e '\t'`)*//;s/( |`echo -e '\t'`)*$//")"
 export DEBUG_INDENTATION=""
+export DEBUG=""
 
 # directory / file paths
 export ROOT_DIR="`pwd`"

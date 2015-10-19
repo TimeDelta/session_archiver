@@ -2,11 +2,16 @@
 source ./util/global.sh
 
 # for debugging
-[[ $1 == "--debug" ]] && { debugging=' '; shift; } || debugging=''
+if [[ $1 == "--debug" ]]; then
+	export DEBUG="ON"
+	shift
+else
+	export DEBUG=''
+fi
 debug_item() {
 	# $1 = title
 	# $2 = value
-	if [[ -n $debugging ]]; then
+	if [[ -n $DEBUG ]]; then
 		cat <<EOB
 		<item arg="debug '$1' '$2'" valid="NO" autocomplete="$2">
 			<title>debug: $1</title>

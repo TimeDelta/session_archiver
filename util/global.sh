@@ -2,8 +2,10 @@
 source ./global_vars.sh
 
 debug() {
-	echo -ne "$DEBUG_INDENTATION" >&2
-	echo "$@" >&2
+	if [[ -n $DEBUG ]]; then
+		echo -ne "$DEBUG_INDENTATION" >&2
+		echo "$@" >&2
+	fi
 }
 
 indent_debug() {
