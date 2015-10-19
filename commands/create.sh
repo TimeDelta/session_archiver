@@ -35,18 +35,17 @@ case $name in
 		name="$1"
 		shift
 		description="$*"
-		complete="$COMMAND_NAME '$name'"
+		complete="$COMMAND_NAME $name"
 		if [[ -n $name ]]; then
 			if [[ -n `get_all_sessions | grep "^$name$"` ]]; then
 				title="Session named \"$name\" already exists."
-				complete="`echo "$complete" | sed "s/'//g"`"
 				valid=NO
 			else
 				title="Create a session named \"$name\""
 				valid=YES
 				if [[ -n $description ]]; then
 					title="$title with description:"
-					complete="$complete '$description'"
+					complete="$complete; $description"
 				fi
 			fi
 			print_item\
