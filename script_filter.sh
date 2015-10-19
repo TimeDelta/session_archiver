@@ -47,6 +47,12 @@ fi
 command="$1"
 shift
 
+# split args based on semicolons
+OLD_IFS="$IFS"
+IFS=$'\n'
+set -- `echo "$@" | tr ';' '\n' | stripws | grep -v '^$'`
+IFS="$OLD_IFS"
+
 if [[ -e "$COMMANDS_DIR/$command.sh" ]]; then
 	"$COMMANDS_DIR/$command.sh" --extra-alfred-items "$@"
 fi

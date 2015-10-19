@@ -16,6 +16,10 @@ unindent_debug() {
 	export DEBUG_INDENTATION="$(echo "$DEBUG_INDENTATION" | sed "s/`echo -e '\t'`//")"
 }
 
+stripws() {
+	sed -E "s/^( |`echo -e '\t'`)*//;s/( |`echo -e '\t'`)*$//"
+}
+
 quote_args() {
 	local args=""
 	for arg in "$@"; do
