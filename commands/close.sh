@@ -48,7 +48,14 @@ case $session in
 		exit 0 ;;
 esac
 
-# @TODO close all active sessions if $session is not supplied
+# if $session is not supplied, close all active sessions
+if [[ -z $session ]]; then
+	IFS=$'\n'
+	for session in `get_active_sessions`; do
+		"$0" "$session"
+	done
+	exit 0
+fi
 
 apps_to_close="$(osascript <<EOT
 	tell application "System Events"
