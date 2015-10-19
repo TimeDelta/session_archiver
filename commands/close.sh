@@ -23,7 +23,7 @@ case $session in
 	--description)
 		session="$1"
 		if [[ -z $session ]]; then
-			active="`get_active_sessions | tr '\n' ',' | sed 's/,/, /'`"
+			active="`get_active_sessions | tr '\n' ',' | sed 's/,$//;s/,/, /'`"
 			echo "Close all active sessions (${active:-No active sessions})."
 		else
 			echo "Close the specified active session."
