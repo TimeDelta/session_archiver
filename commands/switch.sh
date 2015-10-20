@@ -51,6 +51,6 @@ for current in `get_active_sessions`; do
 	run_command close "$current"
 done
 
-run_command restore "$session"
+run_command open "$session"
 
 unindent_debug
