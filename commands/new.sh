@@ -19,8 +19,8 @@ name="$1"
 shift
 
 case $name in
-	--title) echo "Create"; exit 0 ;;
-	--description) echo "Create a session with the specified name and description."; exit 0 ;;
+	--title) echo "New"; exit 0 ;;
+	--description) echo "Create a new session with the specified name and description."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME {name} {description}"; exit 0 ;;
 	--valid)
 		if [[ $# -gt 0 ]]; then
