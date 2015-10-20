@@ -19,7 +19,7 @@ session="$1"
 shift
 
 case $session in
-	--title) echo "Close"; exit 0 ;;
+	--title) echo "`echo "${COMMAND_NAME:0:1}" | tr 'a-z' 'A-Z'`${COMMAND_NAME:1}"; exit 0 ;;
 	--description)
 		active="`get_active_sessions | tr '\n' ',' | sed 's/,$//;s/,/, /'`"
 		echo "Close all active sessions (${active:-No active sessions})."

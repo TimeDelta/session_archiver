@@ -19,7 +19,7 @@ session="$1"
 shift
 
 case $session in
-	--title) echo "Open"; exit 0 ;;
+	--title) echo "`echo "${COMMAND_NAME:0:1}" | tr 'a-z' 'A-Z'`${COMMAND_NAME:1}"; exit 0 ;;
 	--description) echo "Restore the specified session."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME {session name}"; exit 0 ;;
 	--valid) echo "YES"; exit 0 ;;

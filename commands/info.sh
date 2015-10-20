@@ -19,7 +19,7 @@ session="$1"
 shift
 
 case $session in
-	--title) echo "Info"; exit 0 ;;
+	--title) echo "`echo "${COMMAND_NAME:0:1}" | tr 'a-z' 'A-Z'`${COMMAND_NAME:1}"; exit 0 ;;
 	--description) echo "Display information about a specific session."; exit 0 ;;
 	--usage) echo "$COMMAND_NAME [session name]"; exit 0 ;;
 	--valid)
