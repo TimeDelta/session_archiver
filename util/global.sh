@@ -92,7 +92,7 @@ print_session_items() {
 		print_item\
 			--uuid "$COMMAND_NAME.`get_session_uuid "$session"`"\
 			--arg "$COMMAND_NAME '$session' `quote_args "$@"`"\
-			--complete "$COMMAND_NAME $session `echo "$@" | sed "s/^$session//"`"\
+			--complete "$COMMAND_NAME $session; `echo "$@" | sed "s/^$session//"`"\
 			--valid "`run_command "$COMMAND_NAME" --valid "$@"`"\
 			--fn "`mod_sub fn "$session"`"\
 			--ctrl "`mod_sub ctrl "$session"`"\
@@ -109,10 +109,54 @@ print_session_items() {
 	unindent_debug
 }
 
+print_command_items() {
+	local command="$1"
+	local item
+	local OLD_IFS="$IFS"
+	IFS=$'\n'
+	for item in `find "$COMMANDS_DIR" -iname "$command*.sh"`; do
+		arg="`"$item" --arg`"
+		valid="`"$item" --valid`"
+		complete="`"$item" --complete` "
+
+		echo "	<item uid=\"$WORKFLOW_ID.`basename "$item" | sed 's/\.sh$//'`\""\
+			"arg=\"$arg\""\
+			"valid=\"$valid\""\
+			"autocomplete=\"$complete\">"
+		echo "		<title>`"$item" --title`</title>"
+		echo "		<subtitle mod=\"$DESCRIPTION_MODIFIER\">`"$item" --description`</subtitle>"
+		echo "		<subtitle mod=\"$USAGE_MODIFIER\">`"$item" --usage`</subtitle>"
+		echo "	</item>"
+	done
+	IFS="$OLD_IFS"
+}
+
 run_command() {
 	local command="$1"
 	shift
 	"$COMMANDS_DIR/$command.sh" "$@"
+}
+
+alias_command() {
+	local short="$1"
+	local command="$2"
+	echo "$short=$command" >> "$ALIAS_FILE"
+}
+
+get_command_for_alias() {
+	# touch alias file to avoid trying to read a non-existent file
+	touch "$ALIAS_FILE"
+	grep -Fx "$1" "$ALIAS_FILE"
+}
+
+is_command() {
+	local command="$1"
+	local result="`find "$COMMANDS_DIR" -iname "$command.sh"`"
+	if [[ -z $result ]]; then
+		echo 0
+	else
+		echo 1
+	fi
 }
 
 get_app_path() {
@@ -141,6 +185,7 @@ get_installed_apps() {
 }
 
 get_active_sessions() {
+	touch "$CURRENT_SESSIONS_FILE"
 	cat "$CURRENT_SESSIONS_FILE"
 }
 
@@ -161,7 +206,7 @@ get_inactive_sessions() {
 }
 
 is_session_active() {
-	if [[ -n `get_active_sessions | grep -fx "$1" 2> /dev/null` ]]; then
+	if [[ -n `get_active_sessions | grep -Fx "$1" 2> /dev/null` ]]; then
 		echo 1
 	else
 		echo 0
@@ -174,6 +219,7 @@ set_session_active() {
 
 set_session_inactive() {
 	# remove the session from the current sessions file
+	touch "$CURRENT_SESSIONS_FILE"
 	sed -i "" "/$1/d" "$CURRENT_SESSIONS_FILE"
 }
 

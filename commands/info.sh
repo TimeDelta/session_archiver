@@ -35,7 +35,9 @@ case $session in
 		session="$1"
 		shift
 
-		print_session_items "`get_all_sessions | egrep "^$session.*"`" "$@"
+		if [[ $# -lt 1 && -z `get_all_sessions | grep -Fx "$session"` ]]; then
+			print_session_items "`get_all_sessions | egrep "^$session.*"`" "$@"
+		fi
 
 		if [[ -z $session ]]; then
 			active="`get_active_sessions`"
@@ -54,7 +56,7 @@ case $session in
 					IFS=$'\n'
 					for app in `get_session_apps "$session"`; do
 						description="Show this session's info about the saved state of $app"
-						autocomplete="$COMMAND_NAME $session $app"
+						autocomplete="$COMMAND_NAME $session; $app"
 						print_item --valid NO --complete "$autocomplete" "$app" "$description"
 					done
 				fi

@@ -10,6 +10,7 @@ export ROOT_DIR="`pwd`"
 export COMMANDS_DIR="$ROOT_DIR/commands"
 export SESSIONS_DIR="$ROOT_DIR/sessions"
 export CURRENT_SESSIONS_FILE="/tmp/$WORKFLOW_ID.current_sessions"
+export ALIAS_FILE="$COMMANDS_DIR/aliases"
 export APPLICATION_ACTIONS_DIR="$ROOT_DIR/application_actions"
 export UTIL="$ROOT_DIR/util"
 

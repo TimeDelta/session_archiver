@@ -25,27 +25,15 @@ EOB
 echo "<?xml version=\"1.0\"?>"
 echo "<items>"
 
-IFS=$'\n'
-if [[ $# -le 1 ]]; then
-	command="$1"
-	for item in `find "$COMMANDS_DIR" -iname "$command*.sh"`; do
-		arg="`"$item" --arg`"
-		valid="`"$item" --valid`"
-		complete="`"$item" --complete`"
-
-		echo "	<item uid=\"$WORKFLOW_ID.`basename "$item" | sed 's/\.sh$//'`\""\
-			"arg=\"$arg\""\
-			"valid=\"$valid\""\
-			"autocomplete=\"$complete\">"
-		echo "		<title>`"$item" --title`</title>"
-		echo "		<subtitle mod=\"$DESCRIPTION_MODIFIER\">`"$item" --description`</subtitle>"
-		echo "		<subtitle mod=\"$USAGE_MODIFIER\">`"$item" --usage`</subtitle>"
-		echo "	</item>"
-	done
-fi
-
 command="$1"
 shift
+
+expanded="`get_command_for_alias "$command"`"
+command="${expanded:-$command}"
+
+if [[ $# -le 1 && `is_command "$command"` -eq 0 ]]; then
+	print_command_items "$command"
+fi
 
 # split args based on semicolons
 OLD_IFS="$IFS"
@@ -53,8 +41,8 @@ IFS=$'\n'
 set -- `echo "$@" | tr ';' '\n' | stripws | grep -v '^$'`
 IFS="$OLD_IFS"
 
-if [[ -e "$COMMANDS_DIR/$command.sh" ]]; then
-	"$COMMANDS_DIR/$command.sh" --extra-alfred-items "$@"
+if [[ `is_command "$command"` -eq 1 ]]; then
+	run_command "$command" --extra-alfred-items "$@"
 fi
 
 echo "</items>"
