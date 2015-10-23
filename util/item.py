@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 """This module defines the abstract base class for each command."""
 
-from abc import ABCMeta
-
 class Item:
-	__metaclass__ = ABCMeta
-
 	def __init__(self,
 		title,
 		subtitle=None,
@@ -24,39 +20,44 @@ class Item:
 		self.autocomplete = autocomplete
 		self.copy = copy
 		self.valid = valid
+		self.fn_subtitle = fn_subtitle
+		self.shift_subtitle = shift_subtitle
+		self.cmd_subtitle = cmd_subtitle
+		self.ctrl_subtitle = ctrl_subtitle
+		self.alt_subtitle = alt_subtitle
 		return self
 
-	def uid():
+	def uid(self):
 		return self.uid
 
-	def arg():
+	def arg(self):
 		return self.arg
 
-	def valid():
+	def valid(self):
 		return self.valid
 
-	def autocomplete():
+	def autocomplete(self):
 		return self.autocomplete
 
-	def title():
+	def title(self):
 		return self.title
 
-	def subtitle():
+	def subtitle(self):
 		return self.subtitle
 
-	def fn_subtitle():
+	def fn_subtitle(self):
 		return self.fn_subtitle
 
-	def shift_subtitle():
+	def shift_subtitle(self):
 		return self.shift_subtitle
 
-	def cmd_subtitle():
+	def cmd_subtitle(self):
 		return self.cmd_subtitle
 
-	def ctrl_subtitle():
+	def ctrl_subtitle(self):
 		return self.ctrl_subtitle
 
-	def alt_subtitle():
+	def alt_subtitle(self):
 		return self.alt_subtitle
 
 	def print_xml(self):

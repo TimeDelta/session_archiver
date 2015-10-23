@@ -20,8 +20,12 @@ class Commands:
 	}
 
 	@staticmethod
-	def get_command_list():
-		return self.command_list
+	def command_list():
+		return command_list
+
+	@staticmethod
+	def is_command(command_name):
+		return commands[command_name] != None
 
 	@staticmethod
 	def run(command_name, *args):
