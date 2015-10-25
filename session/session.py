@@ -2,8 +2,11 @@
 """This module defines an individual session."""
 
 from util import Item
+from util import const
 
 class Session(Item):
+	const.SESSIONS_DIR = const.ROOT_DIR + "/sessions"
+
 	def __init__(self, name):
 		"""Construct a new session from scrath."""
 		self.name = name

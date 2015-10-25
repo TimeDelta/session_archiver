@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 """This module defines a utility class for sessions."""
 
+import const
+
 class Sessions:
 	sessions = _get_sessions()
+	const.CURRENT_SESSIONS_FILE = "/tmp/%s.current_sessions" % const.WORKFLOW_ID
 
 	@staticmethod
 	def is_session(name):

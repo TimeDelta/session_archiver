@@ -5,7 +5,10 @@ from abc import ABCMeta
 from util import item
 
 class Command(Item):
+	# make this an abstract base class
 	__metaclass__ = ABCMeta
+
+	const.COMMANDS_DIR = const.ROOT_DIR + "/commands"
 
 	def __init__(self):
 		cmd_name = self.command_name()
