@@ -7,9 +7,10 @@ from util import const
 class Session(Item):
 	const.SESSIONS_DIR = const.ROOT_DIR + "/sessions"
 
-	def __init__(self, name):
+	def __init__(self, name, apps):
 		"""Construct a new session from scrath."""
 		self.name = name
+		self.apps = apps
 
 	def __init__(self, directory):
 		"""Reconstruct an existing session."""
@@ -23,8 +24,7 @@ class Session(Item):
 		return self.description
 
 	def list_apps(self):
-		# TODO
-		return
+		return self.apps
 
 	def store_to_file(self):
 		# TODO
