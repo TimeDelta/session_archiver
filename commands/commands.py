@@ -31,7 +31,8 @@ class Commands:
 	def commands_starting_with(start):
 		matching_commands = []
 		for (command_name, command) in commands:
-			if command_name.startswith(start):
+			# NOTE make sure that python does short-circuiting here
+			if start == None or command_name.startswith(start):
 				matching_commands.append(command)
 		return matching_commands
 

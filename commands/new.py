@@ -14,6 +14,9 @@ class New(Command):
 		return self.command_name() + " name; description"
 
 	def extra_items(self, *args):
+		if len(args) == 0:
+			return []
+
 		name = args[0]
 
 		if Sessions.is_session(name) == True:
