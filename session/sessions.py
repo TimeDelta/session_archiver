@@ -2,6 +2,7 @@
 """This module defines a utility class for sessions."""
 
 import const
+from util.files import listdirs
 
 class Sessions:
 	sessions = _get_sessions()
@@ -18,5 +19,4 @@ class Sessions:
 
 	@staticmethod
 	def _get_sessions():
-		# TODO
-		return []
+		return listdirs(const.SESSIONS_DIR, names_only=True)
