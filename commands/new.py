@@ -10,6 +10,7 @@ class New(Command):
 	const.CHOOSE_APPS_SCRIPT = const.COMMANDS_DIR + '/choose_apps.applescript'
 
 	def __init__(self):
+		super(self)
 		self.valid = "NO"
 
 	def description():

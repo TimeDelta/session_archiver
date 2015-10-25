@@ -5,6 +5,7 @@ from session import Sessions
 
 class Open(Command):
 	def __init__(self):
+		super(self)
 		self.valid = "NO"
 
 	def description():

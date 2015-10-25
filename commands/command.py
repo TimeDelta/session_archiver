@@ -14,7 +14,7 @@ class Command(Item):
 		cmd_name = self.command_name()
 		self.title = cmd_name[0:1].upperCase() + cmd_name[1:]
 		self.arg = cmd_name
-		return self
+		self.alt_subtitle = self.usage()
 
 	def command_name(self):
 		return self.__name__
