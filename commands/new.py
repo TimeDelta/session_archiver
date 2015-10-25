@@ -33,6 +33,7 @@ class New(Command):
 		             valid="YES")]
 
 	def run(self, *args):
+		# TODO
 		return
 
 Command.register(New)
