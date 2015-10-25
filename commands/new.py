@@ -5,7 +5,7 @@ import session
 
 class New(Command):
 	def __init__(self):
-		self.valid = False
+		self.valid = "NO"
 
 	def description():
 		return "Create a new session."

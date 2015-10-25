@@ -9,5 +9,11 @@ class Sessions:
 		return name in sessions
 
 	@staticmethod
+	def sessions_starting_with(start):
+		# TODO
+		return
+
+	@staticmethod
 	def _get_sessions():
+		# TODO
 		return []

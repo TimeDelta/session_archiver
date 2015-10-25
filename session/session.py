@@ -16,6 +16,13 @@ class Session(Item):
 	def session_name(self):
 		return self.name
 
+	def description(self):
+		return self.description
+
+	def list_apps(self):
+		# TODO
+		return
+
 	def store_to_file(self):
 		# TODO
 		return

@@ -8,9 +8,9 @@ class Command(Item):
 	__metaclass__ = ABCMeta
 
 	def __init__(self):
-		cmd_name = self.commandName()
+		cmd_name = self.command_name()
 		self.title = cmd_name[0:1].upperCase() + cmd_name[1:]
-		self.arg = self.command_name()
+		self.arg = cmd_name
 		return self
 
 	def command_name(self):
