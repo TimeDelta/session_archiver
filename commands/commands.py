@@ -28,5 +28,13 @@ class Commands:
 		return commands[command_name] != None
 
 	@staticmethod
+	def commands_starting_with(start):
+		matching_commands = []
+		for (command_name, command) in commands:
+			if command_name.startswith(start):
+				matching_commands.append(command)
+		return matching_commands
+
+	@staticmethod
 	def run(command_name, *args):
 		commands[command_name].run(args)
