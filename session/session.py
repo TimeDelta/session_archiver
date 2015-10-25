@@ -7,13 +7,11 @@ class Session(Item):
 	def __init__(self, name):
 		"""Construct a new session from scrath."""
 		self.name = name
-		return self
 
-	def __init__(self, directroy):
+	def __init__(self, directory):
 		"""Reconstruct an existing session."""
 		self.directory = directory
 		# self.name = directory
-		return self
 
 	def session_name(self):
 		return self.name
