@@ -11,11 +11,12 @@ class Session(Item):
 		"""Construct a new session from scrath."""
 		self.name = name
 		self.apps = apps
+		self.directory = const.SESSIONS_DIR + '/' + name
 
 	def __init__(self, directory):
 		"""Reconstruct an existing session."""
 		self.directory = directory
-		# self.name = directory
+		self.name = directory[directory.rfind('/') + 1:]
 
 	def session_name(self):
 		return self.name
