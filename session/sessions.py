@@ -19,6 +19,6 @@ class Sessions:
 	def sessions_starting_with(start):
 		matches = []
 		for session in sessions:
-			if (session.session_name().startswith(start)):
+			if (session.name().startswith(start)):
 				matches.append(session)
 		return matches

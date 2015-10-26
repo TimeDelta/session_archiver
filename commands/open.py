@@ -27,7 +27,7 @@ class Open(Command):
 			for app in apps[1:]:
 				app_list += ', ' + app
 
-			items.append(Item('Open "' + session.session_name() + '"',
+			items.append(Item('Open "' + session.name() + '"',
 			                  subtitle=session.description(),
 			                  cmd_subtitle=app_list,
 			                  valid="YES"))

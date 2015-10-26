@@ -18,7 +18,7 @@ class Session(Item):
 		self.directory = directory
 		self.name = directory[directory.rfind('/') + 1:]
 
-	def session_name(self):
+	def name(self):
 		return self.name
 
 	def description(self):
