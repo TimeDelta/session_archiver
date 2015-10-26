@@ -35,3 +35,15 @@ class Applications:
 		apps = sorted(list(set(apps)))
 
 		return apps
+
+	@staticmethod
+	def app_path(app_name):
+		return subprocess.check_output([lsregister + ' -dump | grep "$*.app" | sed -E "s/.*path: +//"'])
+
+if __name__ == '__main__':
+	import sys
+	if sys.argv[1] == '--app_path':
+		print(Applications.app_path(sys.argv[2]))
+	elif sys.argv[1] == '--installed-apps':
+		for app in Applications.installed_apps():
+			print(app)
