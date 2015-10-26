@@ -5,7 +5,10 @@ import const
 from util.files import listdirs
 
 class Sessions:
-	sessions = _get_sessions()
+	session_dirs = listdirs(const.SESSIONS_DIR)
+	sessions = []
+	for dir in session_dirs:
+		sessions.append(Session(dir))
 	const.CURRENT_SESSIONS_FILE = "/tmp/%s.current_sessions" % const.WORKFLOW_ID
 
 	@staticmethod
@@ -14,9 +17,8 @@ class Sessions:
 
 	@staticmethod
 	def sessions_starting_with(start):
-		# TODO
-		return
-
-	@staticmethod
-	def _get_sessions():
-		return listdirs(const.SESSIONS_DIR, names_only=True)
+		matches = []
+		for session in sessions:
+			if (session.session_name().startswith(start)):
+				matches.append(session)
+		return matches
