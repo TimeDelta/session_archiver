@@ -45,7 +45,7 @@ class New(Command):
 			description = args[1]
 		cmd = 'osascript -e "%s" "' % const.CHOOSE_APPS_SCRIPT
 		cmd += '" "'.join(Applications.installed_apps()) + '"'
-		chosen_apps = subprocess.check_output([cmd]).split('\n')
+		chosen_apps = subprocess.check_output([cmd], universal_newlines=True).split('\n')
 
 		sess = Session(name, chosen_apps)
 		sess.store_to_file()

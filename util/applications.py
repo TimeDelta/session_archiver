@@ -17,7 +17,7 @@ class Applications:
 	@staticmethod
 	def installed_apps():
 		"""List the names of installed apps on this machine"""
-		output = subprocess.check_output([installed_apps_command])
+		output = subprocess.check_output([installed_apps_command], universal_newlines=True)
 
 		# convert into list
 		_apps = output.split('\n')
@@ -38,7 +38,7 @@ class Applications:
 
 	@staticmethod
 	def app_path(app_name):
-		return subprocess.check_output([lsregister + ' -dump | grep "$*.app" | sed -E "s/.*path: +//"'])
+		return subprocess.check_output([lsregister + ' -dump | grep "$*.app" | sed -E "s/.*path: +//"'], universal_newlines=True)
 
 if __name__ == '__main__':
 	import sys
