@@ -51,3 +51,8 @@ class New(Command):
 		sess.store_to_file()
 
 Command.register(New)
+
+if __name__ == '__main__':
+	import sys
+	new = New()
+	new.run(sys.argv)
