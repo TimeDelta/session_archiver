@@ -12,16 +12,9 @@ class _const:
 		pass
 
 	def __setattr__(self,name,value):
-		if self.__dict__.has_key(name):
+		if name in self.__dict__.keys():
 			raise(self.ConstError, "Can't rebind const(%s)" % name)
 		self.__dict__[name] = value
 
 import sys
 sys.modules[__name__] = _const()
-
-const.WORKFLOW_ID = 'com.bryanherman.sessionarchiver'
-const.ROOT_DIR = "."
-
-# modifiers
-const.DESCRIPTION_MODIFIER = "" # this is the default
-const.USAGE_MODIFIER = "alt"
