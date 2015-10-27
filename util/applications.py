@@ -43,11 +43,20 @@ class Applications:
 
 	@staticmethod
 	def app_path(app_name):
-		return subprocess.check_output([lsregister + ' -dump | grep "$*.app" | sed -E "s/.*path: +//"'], universal_newlines=True)
+		lsreg = subprocess.Popen([Applications.lsregister, '-dump'],
+			stdout=subprocess.PIPE,
+			universal_newlines=True)
+		grep = subprocess.Popen(['grep', app_name + '.app'],
+			stdin=lsreg.stdout,
+			stdout=subprocess.PIPE,
+			universal_newlines=True)
+		return subprocess.check_output(['sed', '-E', 's/.*path: +//'],
+			stdin=grep.stdout,
+			universal_newlines=True).rstrip('\n')
 
 if __name__ == '__main__':
 	import sys
-	if sys.argv[1] == '--app_path':
+	if sys.argv[1] == '--app-path':
 		print(Applications.app_path(sys.argv[2]))
 	elif sys.argv[1] == '--installed-apps':
 		for app in Applications.installed_apps():
