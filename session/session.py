@@ -29,5 +29,8 @@ class Session(Item):
 		return self.apps
 
 	def store_to_file(self):
-		# TODO
-		return
+		with open(self.directory + '/session', 'w') as f:
+			f.write(self.name)
+			f.write(self.description)
+			for app in self.apps:
+				f.write(app)
