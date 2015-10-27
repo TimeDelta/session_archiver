@@ -14,12 +14,12 @@ class Sessions:
 
 	@staticmethod
 	def is_session(name):
-		return name in sessions
+		return name in Sessions.sessions
 
 	@staticmethod
 	def sessions_starting_with(start):
 		matches = []
-		for session in sessions:
+		for session in Sessions.sessions:
 			if (session.name().startswith(start)):
 				matches.append(session)
 		return matches
