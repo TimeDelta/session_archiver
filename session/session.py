@@ -3,6 +3,7 @@
 
 from util import Item
 from util import const
+from util import globals
 
 class Session(Item):
 	const.SESSIONS_DIR = const.ROOT_DIR + "/sessions"

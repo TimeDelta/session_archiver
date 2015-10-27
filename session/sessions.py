@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 """This module defines a utility class for sessions."""
 
-import const
+from util import const
+from util import globals
 from util.files import listdirs
 
 class Sessions:

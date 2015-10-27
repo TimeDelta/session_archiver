@@ -3,6 +3,8 @@
 
 from abc import ABCMeta
 from util import item
+from util import const
+from util import globals
 
 class Command(Item):
 	# make this an abstract base class
