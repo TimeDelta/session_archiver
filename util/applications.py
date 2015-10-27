@@ -54,6 +54,11 @@ class Applications:
 			stdin=grep.stdout,
 			universal_newlines=True).rstrip('\n')
 
+	@staticmethod
+	def open_apps(apps):
+		for app in apps:
+			subprocess.call(['osascript', '-e', 'tell application "%s" to launch' % app])
+
 if __name__ == '__main__':
 	import sys
 	if sys.argv[1] == '--app-path':

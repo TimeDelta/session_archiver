@@ -17,6 +17,12 @@ class Sessions:
 		return name in Sessions.sessions
 
 	@staticmethod
+	def get_session_named(name):
+		for session in Sessions.sessions:
+			if session.name() == name:
+				return session
+
+	@staticmethod
 	def sessions_starting_with(start):
 		matches = []
 		for session in Sessions.sessions:

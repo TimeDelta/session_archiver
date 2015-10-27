@@ -4,6 +4,7 @@
 from util import Item
 from util import const
 from util import globals
+from util import applications
 
 class Session(Item):
 	const.SESSIONS_DIR = const.ROOT_DIR + "/sessions"
@@ -34,3 +35,6 @@ class Session(Item):
 			f.write(self.description)
 			for app in self.apps:
 				f.write(app)
+
+	def open(self):
+		Applications.open_apps(self.apps)
