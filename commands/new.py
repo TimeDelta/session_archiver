@@ -57,6 +57,7 @@ class New(Command):
 		for app in chosen_apps:
 			dir = const.SESSIONS_DIR + '/' + name + '/' + app
 			subprocess.call(['mkdir', '-p', dir], universal_newlines=True)
+			Applications.run_app_action_for_session(app, 'new', name)
 
 Command.register(New)
 
