@@ -38,6 +38,5 @@ class Open(Command):
 		name = args[0]
 		session = Sessions.get_session_named(name)
 		session.open()
-		# TODO application actions
 
 Command.register(Open)

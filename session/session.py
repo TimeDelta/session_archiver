@@ -39,3 +39,5 @@ class Session(Item):
 
 	def open(self):
 		Applications.open_apps(self.apps)
+		for app in self.apps:
+			Applications.run_app_action_for_session(app, "open", self.name)
