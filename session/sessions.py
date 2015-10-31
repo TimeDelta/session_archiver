@@ -10,7 +10,16 @@ class Sessions:
 	sessions = []
 	for dir in session_dirs:
 		sessions.append(Session(dir))
+
+	# get a list of open sessions
 	const.CURRENT_SESSIONS_FILE = "/tmp/%s.current_sessions" % const.WORKFLOW_ID
+	open_sessions = []
+	with open(const.CURRENT_SESSIONS_FILE, 'r') as f:
+		for line in f:
+			open_sessions.append(Sessions.get_session_named(line))
+
+	# get list of closed sessions
+	closed_sessions = list(set(sessions) - set(open_sessions))
 
 	@staticmethod
 	def is_session(name):
@@ -29,3 +38,10 @@ class Sessions:
 			if (session.name().startswith(start)):
 				matches.append(session)
 		return matches
+
+	@staticmethod
+	def get_open_sessions():
+		return open_sessions
+
+	def get_closed_sessions():
+		return closed_sessions

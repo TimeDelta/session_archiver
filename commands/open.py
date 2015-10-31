@@ -20,7 +20,10 @@ class Open(Command):
 			name = args[0]
 
 		items = []
-		for session in Sessions.sessions_starting_with(name):
+		for session in Sessions.get_closed_sessions():
+			if not sessions.name().startswith(name):
+				continue
+
 			# build comma-separated list of apps in the session
 			apps = session.list_apps()
 			app_list = apps[0]
