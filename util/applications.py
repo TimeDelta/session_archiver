@@ -5,7 +5,7 @@ import subprocess
 import re
 import const
 import globals
-from os.path import isdir
+from os.path import isdir, isfile
 
 class Applications:
 	const.APPLICATION_ACTIONS_DIR = const.ROOT_DIR + "/application_actions"
@@ -62,8 +62,9 @@ class Applications:
 	@staticmethod
 	def run_app_action_for_session(app, action, session):
 		script = const.APPLICATION_ACTIONS_DIR + '/' + app + '/' + action + '.sh'
-		working_dir = const.SESSIONS_DIR + '/' + session + '/' + app
-		subprocess.call([script, session], universal_newlines=True, cwd=working_dir)
+		if isfile(script):
+			working_dir = const.SESSIONS_DIR + '/' + session + '/' + app
+			subprocess.call([script, session], universal_newlines=True, cwd=working_dir)
 
 if __name__ == '__main__':
 	import sys
