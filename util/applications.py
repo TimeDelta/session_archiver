@@ -59,6 +59,12 @@ class Applications:
 		for app in apps:
 			subprocess.call(['osascript', '-e', 'tell application "%s" to launch' % app])
 
+	@staticmethod
+	def run_app_action_for_session(app, action, session):
+		script = const.APPLICATION_ACTIONS_DIR + '/' + app + '/' + action + '.sh'
+		working_dir = const.SESSIONS_DIR + '/' + session + '/' + app
+		subprocess.call([script, session], universal_newlines=True, cwd=working_dir)
+
 if __name__ == '__main__':
 	import sys
 	if sys.argv[1] == '--app-path':
