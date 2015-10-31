@@ -5,6 +5,7 @@ from util import Item
 from util import const
 from util import globals
 from util import applications
+from uuid import uuid4
 
 class Session(Item):
 	const.SESSIONS_DIR = const.ROOT_DIR + "/sessions"
@@ -13,6 +14,7 @@ class Session(Item):
 		"""Construct a new session from scrath."""
 		self.name = name
 		self.apps = apps
+		self.uid = uuid4()
 		self.description = description
 		self.directory = const.SESSIONS_DIR + '/' + name
 
