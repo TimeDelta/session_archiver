@@ -43,12 +43,20 @@ class New(Command):
 		description = None
 		if len(args) > 1:
 			description = args[1]
+
+		# let user choose which apps to include
 		cmd = 'osascript -e "%s" "' % const.CHOOSE_APPS_SCRIPT
 		cmd += '" "'.join(Applications.installed_apps()) + '"'
 		chosen_apps = subprocess.check_output([cmd], universal_newlines=True).split('\n')
 
-		sess = Session(name, chosen_apps)
+		# create the session
+		sess = Session(name, description, chosen_apps)
 		sess.store_to_file()
+
+		# each chosen app should have its own directory for application actions
+		for app in chosen_apps:
+			dir = const.SESSIONS_DIR + '/' + session + '/' + app
+			subprocess.call(['mkdir', '-p', dir], universal_newlines=True)
 
 Command.register(New)
 

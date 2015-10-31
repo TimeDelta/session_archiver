@@ -9,10 +9,11 @@ from util import applications
 class Session(Item):
 	const.SESSIONS_DIR = const.ROOT_DIR + "/sessions"
 
-	def __init__(self, name, apps):
+	def __init__(self, name, description, apps):
 		"""Construct a new session from scrath."""
 		self.name = name
 		self.apps = apps
+		self.description = description
 		self.directory = const.SESSIONS_DIR + '/' + name
 
 	def __init__(self, directory):
