@@ -55,7 +55,7 @@ class New(Command):
 
 		# each chosen app should have its own directory for application actions
 		for app in chosen_apps:
-			dir = const.SESSIONS_DIR + '/' + session + '/' + app
+			dir = const.SESSIONS_DIR + '/' + name + '/' + app
 			subprocess.call(['mkdir', '-p', dir], universal_newlines=True)
 
 Command.register(New)
