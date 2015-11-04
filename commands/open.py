@@ -43,3 +43,8 @@ class Open(Command):
 		session.open()
 
 Command.register(Open)
+
+if __name__ == '__main__':
+	import sys
+	o = Open()
+	o.run(sys.argv)
