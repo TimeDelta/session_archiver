@@ -43,5 +43,6 @@ class Sessions:
 	def get_open_sessions():
 		return open_sessions
 
+	@staticmethod
 	def get_closed_sessions():
 		return closed_sessions
