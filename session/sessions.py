@@ -33,11 +33,7 @@ class Sessions:
 
 	@staticmethod
 	def sessions_starting_with(start):
-		matches = []
-		for session in Sessions.sessions:
-			if (session.name().startswith(start)):
-				matches.append(session)
-		return matches
+		return [s for s in Sessions.sessions if s.name().startswith(start)]
 
 	@staticmethod
 	def get_open_sessions():
