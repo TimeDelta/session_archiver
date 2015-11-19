@@ -239,7 +239,7 @@
 				<key>runningsubtext</key>
 				<string>Please Wait</string>
 				<key>script</key>
-				<string>./script_filter.sh {query}</string>
+				<string>./script_filter.py {query}</string>
 				<key>title</key>
 				<string>Session Archiver</string>
 				<key>type</key>

@@ -1,21 +1,30 @@
 #!/usr/bin/env python
 """This module defines common utility functions for interacting with commands"""
+import sys
+sys.path.insert(0, '..')
 
-from commands import new
-from commands import delete
-from commands import open
-from commands import close
-from commands import switch
-from commands import info
+from new import New
+# from delete import Delete
+from open import Open
+# from close import Close
+# from switch import Switch
+from info import Info
 
 class Commands:
-	command_list = ["new", "delete", "open", "close", "switch", "info"]
+	command_list = [
+		"new",
+		# "delete",
+		"open",
+		# "close",
+		# "switch",
+		"info"
+	]
 	commands = {
 		"new" : New(),
-		"delete" : Delete(),
+		# "delete" : Delete(),
 		"open": Open(),
-		"close": Close(),
-		"switch": Switch(),
+		# "close": Close(),
+		# "switch": Switch(),
 		"info": Info()
 	}
 
@@ -25,16 +34,14 @@ class Commands:
 
 	@staticmethod
 	def is_command(command_name):
-		return commands[command_name] != None
+		return Commands.commands[command_name] != None
 
 	@staticmethod
 	def commands_starting_with(start):
-		matching_commands = []
-		for (command_name, command) in commands:
-			# NOTE make sure that python does short-circuiting here
-			if start == None or command_name.startswith(start):
-				matching_commands.append(command)
-		return matching_commands
+		if start:
+			return [c for c in Commands.commands if c.command_name().startswith(start)]
+		else:
+			return Commands.commands.values()
 
 	@staticmethod
 	def run(command_name, *args):

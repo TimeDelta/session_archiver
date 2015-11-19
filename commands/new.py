@@ -1,17 +1,20 @@
 #!/usr/bin/env python
 """This module defines the new command, which creates a new session."""
+import sys
+sys.path.insert(0, '..')
 
-from session import session
+from session.session import Session
+from command import Command
 import subprocess
-import const
-from util import applications
+from util import const
+from util.applications import Applications
 
 class New(Command):
 	const.CHOOSE_APPS_SCRIPT = const.COMMANDS_DIR + '/choose_apps.applescript'
 
 	def __init__(self):
-		super(self)
-		self.valid = "NO"
+		super(Command)
+		self._valid = "NO"
 
 	def description():
 		return "Create a new session."

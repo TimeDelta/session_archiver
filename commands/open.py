@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 """This module defines the open command, which opens an existing session."""
+import sys
+sys.path.insert(0, '..')
 
-from session import Sessions
+from session.sessions import Sessions
+from command import Command
 
 class Open(Command):
 	def __init__(self):
-		super(self)
-		self.valid = "NO"
+		super(Command)
+		self._valid = "NO"
 
 	def description():
 		return "Open an existing session."
@@ -45,6 +48,5 @@ class Open(Command):
 Command.register(Open)
 
 if __name__ == '__main__':
-	import sys
 	o = Open()
 	o.run(sys.argv)

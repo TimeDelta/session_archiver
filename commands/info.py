@@ -1,18 +1,21 @@
 #!/usr/bin/env python
 """This module defines the info command, which creates a new session."""
+import sys
+sys.path.insert(0, '..')
 
-from session import session
+from session.session import Session
 import subprocess
-import const
+from util import const
 from util import applications
+from command import Command
 
 class Info(Command):
 	def __init__(self):
-		super(self)
-		self.valid = "NO"
+		super(Command)
+		self._valid = "NO"
 
 	def description():
-		return "Get informatin about sessions."
+		return "Get information about sessions."
 
 	def usage(self):
 		return self.command_name() + " [session name[; app name]]"

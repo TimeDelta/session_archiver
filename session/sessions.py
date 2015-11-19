@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 """This module defines a utility class for sessions."""
+import sys
+sys.path.insert(0, '..')
 
 from util import const
 from util import globals
 from util.files import listdirs
+from session import Session
 
 class Sessions:
 	session_dirs = listdirs(const.SESSIONS_DIR)
@@ -30,10 +33,14 @@ class Sessions:
 		for session in Sessions.sessions:
 			if session.name() == name:
 				return session
+		return None
 
 	@staticmethod
 	def sessions_starting_with(start):
-		return [s for s in Sessions.sessions if s.name().startswith(start)]
+		if start:
+			return [s for s in Sessions.sessions if s.name().startswith(start)]
+		else:
+			return Sessions.sessions
 
 	@staticmethod
 	def get_open_sessions():

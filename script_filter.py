@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """This is the main entry point for the workflow"""
 import sys
-from util import debugging
-from commands import commands
+import logging
+from commands.commands import Commands
 
 def main():
 	command = None

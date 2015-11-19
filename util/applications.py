@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 """This module defines a utility class for getting information about applications."""
+import sys
+sys.path.insert(0, '..')
 
 import subprocess
 import re
-import const
+from util import const
 import globals
 from os.path import isdir, isfile
 

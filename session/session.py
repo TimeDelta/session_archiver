@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 """This module defines an individual session."""
+import sys
+sys.path.insert(0, '..')
 
-from util import Item
+from util.item import Item
 from util import const
 from util import globals
-from util import applications
+from util.applications import Applications
 from uuid import uuid4
 
 class Session(Item):
