@@ -8,7 +8,7 @@ from command import Command
 
 class Open(Command):
 	def __init__(self):
-		super(Command)
+		super(Open, self).__init__()
 		self._valid = "NO"
 
 	def description():

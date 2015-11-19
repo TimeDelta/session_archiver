@@ -32,7 +32,6 @@ class Item:
 		self._cmd_subtitle = cmd_subtitle
 		self._ctrl_subtitle = ctrl_subtitle
 		self._alt_subtitle = alt_subtitle
-		return self
 
 	def uid(self):
 		return self._uid
@@ -69,18 +68,18 @@ class Item:
 
 	def print_xml(self):
 		tag = '	<item'
-		if self.uid() != None:
+		if self.uid():
 			tag += ' uid="' + str(self.uid()) + '"'
-		if self.arg() != None:
+		if self.arg():
 			tag += ' arg="' + str(self.arg()) + '"'
-		if self.valid() != None:
+		if self.valid():
 			tag += ' valid="' + str(self.valid()) + '"'
-		if self.autocomplete() != None:
+		if self.autocomplete():
 			tag += ' autocomplete="' + str(self.autocomplete()) + '"'
 		tag += '>\n'
-		if self.title() != None:
+		if self.title():
 			tag += '		<title>' + str(self.title()) + '</title>'
-		if self.subtitle() != None:
+		if self.subtitle():
 			tag += '		<subtitle>' + str(self.subtitle()) + '</subtitle>'
 
 		tag += '	</item>'

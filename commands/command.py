@@ -15,14 +15,14 @@ class Command(Item):
 	const.COMMANDS_DIR = const.ROOT_DIR + "/commands"
 
 	def __init__(self):
-		super(Item)
+		super(Command, self).__init__("")
 		cmd_name = self.command_name()
-		self.title = cmd_name[0:1].upperCase() + cmd_name[1:]
-		self.arg = cmd_name
-		self.alt_subtitle = self.usage()
+		self._title = cmd_name[0:1].upper() + cmd_name[1:]
+		self._arg = cmd_name
+		self._alt_subtitle = self.usage()
 
 	def command_name(self):
-		return self.__name__
+		return __name__
 
 	@abstractmethod
 	def description(self):
@@ -39,3 +39,5 @@ class Command(Item):
 	@abstractmethod
 	def extra_items(self, *args):
 		return
+
+Item.register(Command)

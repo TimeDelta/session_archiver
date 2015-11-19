@@ -11,7 +11,7 @@ from command import Command
 
 class Info(Command):
 	def __init__(self):
-		super(Command)
+		super(Info, self).__init__()
 		self._valid = "NO"
 
 	def description():

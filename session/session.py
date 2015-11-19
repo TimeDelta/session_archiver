@@ -14,34 +14,37 @@ class Session(Item):
 
 	def __init__(self, name, description, apps):
 		"""Construct a new session from scrath."""
-		self.name = name
-		self.apps = apps
-		self.uid = uuid4()
-		self.description = description
+		super(Command, self).__init__("")
+		self._name = name
+		self._apps = apps
+		self._uid = uuid4()
+		self._description = description
 		self.directory = const.SESSIONS_DIR + '/' + name
 
 	def __init__(self, directory):
 		"""Reconstruct an existing session."""
 		self.directory = directory
-		self.name = directory[directory.rfind('/') + 1:]
+		self._name = directory[directory.rfind('/') + 1:]
 
 	def name(self):
-		return self.name
+		return self._name
 
 	def description(self):
-		return self.description
+		return self._description
 
 	def list_apps(self):
-		return self.apps
+		return self._apps
 
 	def store_to_file(self):
 		with open(self.directory + '/session', 'w') as f:
-			f.write(self.name)
-			f.write(self.description)
-			for app in self.apps:
+			f.write(self._name)
+			f.write(self._description)
+			for app in self._apps:
 				f.write(app)
 
 	def open(self):
-		Applications.open_apps(self.apps)
-		for app in self.apps:
-			Applications.run_app_action_for_session(app, "open", self.name)
+		Applications.open_apps(self._apps)
+		for app in self._apps:
+			Applications.run_app_action_for_session(app, "open", self._name)
+
+Item.register(Session)
