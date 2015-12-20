@@ -78,9 +78,9 @@ class Item:
 			tag += ' autocomplete="' + str(self.autocomplete()) + '"'
 		tag += '>\n'
 		if self.title():
-			tag += '		<title>' + str(self.title()) + '</title>'
+			tag += '		<title>' + str(self.title()) + '</title>\n'
 		if self.subtitle():
-			tag += '		<subtitle>' + str(self.subtitle()) + '</subtitle>'
+			tag += '		<subtitle>' + str(self.subtitle()) + '</subtitle>\n'
 
-		tag += '	</item>'
+		tag += '	</item>\n'
 		print(tag)

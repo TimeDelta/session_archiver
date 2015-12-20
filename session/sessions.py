@@ -3,6 +3,8 @@
 import sys
 sys.path.insert(0, '..')
 
+from os.path import isfile
+
 from util import const
 from util import globals
 from util.files import listdirs
@@ -14,8 +16,13 @@ class Sessions:
 	for dir in session_dirs:
 		sessions.append(Session(dir))
 
-	# get a list of open sessions
+	# if the current sessions temp file doesn't exist, create it
 	const.CURRENT_SESSIONS_FILE = "/tmp/%s.current_sessions" % const.WORKFLOW_ID
+	if not isfile(const.CURRENT_SESSIONS_FILE):
+		f = open(const.CURRENT_SESSIONS_FILE, 'w')
+		f.close()
+
+	# get a list of open sessions
 	open_sessions = []
 	with open(const.CURRENT_SESSIONS_FILE, 'r') as f:
 		for line in f:
