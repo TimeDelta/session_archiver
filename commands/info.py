@@ -3,8 +3,10 @@
 import sys
 sys.path.insert(0, '..')
 
-from session.session import Session
 import subprocess
+import re
+
+from session.session import Session
 from util import const
 from util import applications
 from command import Command
@@ -13,6 +15,9 @@ class Info(Command):
 	def __init__(self):
 		super(Info, self).__init__()
 		self._valid = "NO"
+
+	def command_name(self):
+		return re.sub(r'.*\.', '', __name__)
 
 	def description():
 		return "Get information about sessions."

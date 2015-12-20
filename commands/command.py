@@ -21,8 +21,9 @@ class Command(Item):
 		self._arg = cmd_name
 		self._alt_subtitle = self.usage()
 
+	@abstractmethod
 	def command_name(self):
-		return __name__
+		return
 
 	@abstractmethod
 	def description(self):

@@ -3,6 +3,8 @@
 import sys
 sys.path.insert(0, '..')
 
+import re
+
 from session.sessions import Sessions
 from command import Command
 
@@ -10,6 +12,9 @@ class Open(Command):
 	def __init__(self):
 		super(Open, self).__init__()
 		self._valid = "NO"
+
+	def command_name(self):
+		return re.sub(r'.*\.', '', __name__)
 
 	def description():
 		return "Open an existing session."

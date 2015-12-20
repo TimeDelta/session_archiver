@@ -3,9 +3,11 @@
 import sys
 sys.path.insert(0, '..')
 
+import subprocess
+import re
+
 from session.session import Session
 from command import Command
-import subprocess
 from util import const
 from util.applications import Applications
 
@@ -15,6 +17,9 @@ class New(Command):
 	def __init__(self):
 		super(New, self).__init__()
 		self._valid = "NO"
+
+	def command_name(self):
+		return re.sub(r'.*\.', '', __name__)
 
 	def description():
 		return "Create a new session."
