@@ -25,6 +25,9 @@ class Info(Command):
 	def usage(self):
 		return self.command_name() + " [session name[; app name]]"
 
+	def autocomplete(self):
+		return self.command_name()
+
 	def extra_items(self, *args):
 		name = None
 		if len(args) > 0:

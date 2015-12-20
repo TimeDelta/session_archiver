@@ -27,6 +27,9 @@ class New(Command):
 	def usage(self):
 		return self.command_name() + " name; description"
 
+	def autocomplete(self):
+		return self.command_name()
+
 	def extra_items(self, *args):
 		if len(args) == 0:
 			return []
