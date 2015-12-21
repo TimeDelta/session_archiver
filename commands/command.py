@@ -34,11 +34,11 @@ class Command(Item):
 		return
 
 	@abstractmethod
-	def run(self, *args):
+	def run(self, args):
 		return
 
 	@abstractmethod
-	def extra_items(self, *args):
+	def extra_items(self, args):
 		return
 
 Item.register(Command)

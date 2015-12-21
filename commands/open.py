@@ -25,7 +25,7 @@ class Open(Command):
 	def autocomplete(self):
 		return self.command_name()
 
-	def extra_items(self, *args):
+	def extra_items(self, args):
 		name = None
 		if len(args) > 0:
 			name = args[0]
@@ -48,7 +48,7 @@ class Open(Command):
 
 		return items
 
-	def run(self, *args):
+	def run(self, args):
 		name = args[0]
 		session = Sessions.get_session_named(name)
 		session.open()

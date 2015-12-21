@@ -21,6 +21,7 @@ class Item:
 		ctrl_subtitle=None,
 		alt_subtitle=None
 	):
+		self._title = title
 		self._subtitle = subtitle
 		self._uid = uid
 		self._arg = arg
@@ -82,5 +83,5 @@ class Item:
 		if self.subtitle():
 			tag += '		<subtitle>' + str(self.subtitle()) + '</subtitle>\n'
 
-		tag += '	</item>\n'
+		tag += '	</item>'
 		print(tag)

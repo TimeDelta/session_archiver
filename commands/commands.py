@@ -20,7 +20,7 @@ class Commands:
 		"info"
 	]
 	commands = {
-		"new" : New(),
+		"new": New(),
 		# "delete" : Delete(),
 		"open": Open(),
 		# "close": Close(),
@@ -39,10 +39,10 @@ class Commands:
 	@staticmethod
 	def commands_starting_with(start):
 		if start:
-			return [c for c in Commands.commands if c.command_name().startswith(start)]
+			return [c for c in Commands.commands.values() if c.command_name().startswith(start)]
 		else:
 			return Commands.commands.values()
 
 	@staticmethod
-	def run(command_name, *args):
-		commands[command_name].run(args)
+	def run(command_name, args, modifier=None):
+		Commands.commands[command_name].run(args, modifier)

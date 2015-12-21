@@ -142,10 +142,10 @@
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
-				<integer>0</integer>
+				<integer>118</integer>
 				<key>script</key>
 				<string>echo entered alfred.workflow.action.script with alt &gt;&amp;2
-./process_command.sh -m alt {query}</string>
+./process_command.py alt {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -162,10 +162,10 @@
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
-				<integer>102</integer>
+				<integer>118</integer>
 				<key>script</key>
 				<string>echo entered alfred.workflow.action.script with cmd &gt;&amp;2
-./process_command.sh -m cmd {query}</string>
+./process_command.py cmd {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -182,10 +182,10 @@
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
-				<integer>102</integer>
+				<integer>118</integer>
 				<key>script</key>
 				<string>echo entered alfred.workflow.action.script with ctrl &gt;&amp;2
-./process_command.sh -m ctrl {query}</string>
+./process_command.py ctrl {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -193,29 +193,6 @@
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>95D183C9-2C88-4A60-8CBC-A69E0E07C11A</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>output</key>
-				<integer>0</integer>
-				<key>removeextension</key>
-				<false/>
-				<key>sticky</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>A9842893-74ED-43EB-8975-6CDFF0168921</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -257,13 +234,36 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>A9842893-74ED-43EB-8975-6CDFF0168921</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
-				<integer>102</integer>
+				<integer>118</integer>
 				<key>script</key>
 				<string>echo entered alfred.workflow.action.script with shift &gt;&amp;2
-./process_command.sh -m shift {query}</string>
+./process_command.py shift {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -280,10 +280,10 @@
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
-				<integer>102</integer>
+				<integer>118</integer>
 				<key>script</key>
 				<string>echo entered alfred.workflow.action.script with fn &gt;&amp;2
-./process_command.sh -m fn {query}</string>
+./process_command.py fn {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -300,10 +300,10 @@
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
-				<integer>34</integer>
+				<integer>118</integer>
 				<key>script</key>
 				<string>echo entered alfred.workflow.action.script &gt;&amp;2
-./process_command.sh {query}</string>
+./process_command.py "" {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
